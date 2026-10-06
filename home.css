@@ -1,12 +1,15 @@
 /* Deephold landing v3.
    Rules: only real game captures, one action, plain type. The game's own UI
    (dark panels, thin warm borders, pixel headings) is the style guide.
-   Motion: clips play while visible, depth bars fill once, hero fades in. */
+   Motion: clips play while visible, game windows open once, depth bars fill once, hero fades in. */
 
 .home3 { --sec: clamp(56px, 8vh, 88px); --red: #D9553A; }
 
 /* base overrides: no shine sweep, calm hover */
 .home3 .btn-gold::after { display: none; }
+/* nav underline grows with transform instead of animating `right` */
+.home3 .nav-links a::after { right: 0; transform: scaleX(0); transform-origin: left center; transition: transform 240ms var(--out); }
+@media (hover: hover) and (pointer: fine) { .home3 .nav-links a:hover::after { transform: scaleX(1); } }
 .home3 b { color: var(--hot); font-weight: 600; }
 .home3 p { margin: 0; }
 .home3 h1,
@@ -24,6 +27,11 @@
 .frame > img,
 .frame > video { width: 100%; height: auto; border: 1px solid var(--line-hi); border-radius: 8px; background: #050403; }
 .frame figcaption { margin-top: 10px; font-size: 14px; color: var(--faint); }
+/* game windows below the hero open top-down once, as they scroll in.
+   .v3-motion is set by home.js only when motion is allowed, so no-JS shows everything. */
+.v3-motion .scr:not(.hero) .frame { clip-path: inset(0 0 100% 0); transition: clip-path 900ms var(--out); }
+.v3-motion .scr:not(.hero) .frame.in { clip-path: inset(0); }
+.v3-motion .idle-media .frame + .frame { transition-delay: 80ms; }
 
 /* ---------- 1 · hero ---------- */
 /* styles.css gives .hero a full-screen flex box (v1 key-art hero); v3 sizes to content */
@@ -67,8 +75,8 @@
 .ladder .z b { font-weight: 700; color: var(--hi); } /* body font: in the pixel face Z reads as 2 */
 .ladder .ore { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .ladder .bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.05); overflow: hidden; }
-.ladder .bar i { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--dim); transition: width 700ms var(--out); transition-delay: calc(var(--i, 0) * 55ms); }
-.ladder.on .bar i { width: calc(var(--lv) * 1%); }
+.ladder .bar i { display: block; width: calc(var(--lv) * 1%); height: 100%; border-radius: inherit; background: var(--dim); clip-path: inset(0 100% 0 0 round 3px); transition: clip-path 700ms var(--out); transition-delay: calc(var(--i, 0) * 50ms); }
+.ladder.on .bar i { clip-path: inset(0 0 0 0 round 3px); } /* clip, not width: no layout work per frame */
 .ladder .z.risk .bar i { background: var(--ember); }
 .ladder .z.edge .bar i { background: var(--red); }
 .ladder .lv { text-align: right; font-variant-numeric: tabular-nums; color: var(--dim); }
@@ -96,7 +104,9 @@
 .pn-list { margin: 14px 0 0; padding: 0; list-style: none; }
 .pn-list li { padding: 13px 0; border-bottom: 1px solid var(--line); }
 .pn-list a { font-family: var(--display); font-size: 18px; color: var(--hi); }
-.pn-list a:hover, .pn-list a:focus-visible { color: var(--hot); }
+.pn-list a { transition: color 150ms ease; }
+.pn-list a:focus-visible { color: var(--hot); }
+@media (hover: hover) and (pointer: fine) { .pn-list a:hover { color: var(--hot); } } /* no sticky hover on touch */
 .pn-meta { display: block; margin-top: 2px; font-size: 13px; color: var(--faint); }
 .pn-list p { display: -webkit-box; margin-top: 6px; overflow: hidden; font-size: 15px; color: var(--dim); -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .more,
@@ -109,6 +119,10 @@
 .join-grid > [hidden] + .faq { grid-column: 1 / -1; }
 .join-form .wl-form { margin-top: 22px; }
 .wl-next { margin-top: 16px; font-size: 15px; color: var(--dim); }
+/* success message: short, with a light blur so the swap from the form doesn't snap */
+@keyframes v3-done { from { opacity: 0; transform: translateY(6px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes v3-fade { from { opacity: 0; } }
+.home3 .wl-form[data-state="done"] .wl-done { animation: v3-done 360ms var(--out) both; }
 .faq dl { margin: 12px 0 0; }
 .faq dl > div { padding: 13px 0; border-bottom: 1px solid var(--line); }
 .faq dl > div[hidden] { display: none; }
@@ -152,4 +166,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hero h1, .hero-side, .hero-clip { animation: none; }
   .ladder .bar i { transition: none; }
+  .v3-motion .scr:not(.hero) .frame { clip-path: none; transition: none; }
+  .home3 .nav-links a::after { transition: none; }
+  .home3 .wl-form[data-state="done"] .wl-done { animation: v3-fade 200ms ease both; } /* opacity only */
 }

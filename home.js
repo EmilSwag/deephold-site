@@ -51,11 +51,13 @@
     const p = v.play();
     if (p && p.catch) p.catch(() => { /* autoplay blocked: the poster stays */ });
   };
-  if ('IntersectionObserver' in window) {
+  const hasIO = 'IntersectionObserver' in window;
+  const onScreen = new Set();
+  if (hasIO) {
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
-        if (e.isIntersecting) start(e.target);
-        else if (!e.target.paused) e.target.pause();
+        if (e.isIntersecting) { onScreen.add(e.target); start(e.target); }
+        else { onScreen.delete(e.target); if (!e.target.paused) e.target.pause(); }
       }
     }, { rootMargin: '160px 0px', threshold: 0.01 });
     clips.forEach((v) => io.observe(v));
@@ -63,6 +65,27 @@
     clips.forEach(start);
   }
   if (reduce) clips.forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
+  // Background tab: stop decoding; on return resume only what is on screen.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clips.forEach((v) => { if (!v.paused) v.pause(); });
+    else if (!reduce) (hasIO ? [...onScreen] : clips).forEach(start);
+  });
+
+  // Game windows below the hero open once as they scroll in (CSS: .v3-motion .frame).
+  // Frames already on screen or above it at load simply show.
+  const frames = [...document.querySelectorAll('.scr:not(.hero) .frame')];
+  if (!reduce && hasIO && frames.length) {
+    frames.forEach((f) => { if (f.getBoundingClientRect().top < innerHeight) f.classList.add('in'); });
+    root.classList.add('v3-motion');
+    const fo = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        e.target.classList.add('in');
+        fo.unobserve(e.target);
+      }
+    }, { rootMargin: '0px 0px -10% 0px' });
+    frames.filter((f) => !f.classList.contains('in')).forEach((f) => fo.observe(f));
+  }
 
   // Depth ladder: bars fill top to bottom, once.
   const ladder = document.querySelector('[data-ladder]');
