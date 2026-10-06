@@ -1,0 +1,123 @@
+/* Deephold site — generated sub-pages (patch notes, press kit, legal, 404). Built on the tokens and
+   components of styles.css; this file only adds page layout, long-form text and the page-specific blocks. */
+
+.sub-page main.page { padding: 112px 0 80px; min-height: 72vh; }
+.page-in { max-width: 920px; }
+
+/* ── /waitlist/ ── the landing's form on its own page, for links from outside
+   (Discord, a tweet, the Steam page) that should land on the form and nothing
+   else. The component itself lives in styles.css (.wl-*); this is layout. */
+.wl-page .page-in { max-width: 1080px; }
+.wl-page .wl-in { align-items: start; }
+.wl-page .page-head { margin-bottom: 0; }
+.wl-page .page-head h1 { max-width: 12ch; }
+.wl-page .wl-form { margin-top: 28px; }
+.wl-page .wl-steps { margin-top: 10px; }
+.wl-page .wl-open { margin: 0 0 40px; }
+.wl-page .wl-open .cta-row { margin-top: 18px; }
+/* a reminder of what the list is for: one clip, the arena, poster attribute set because this
+   page has no main.js to lazy-load it and a single clip is a fair price for a page that is
+   about one thing */
+.wl-page .wl-media { margin: 72px 0 0; }
+.wl-page .wl-media video { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); background: #0B0A08; }
+.wl-page .wl-media figcaption { margin: 10px 0 0; font-size: 14px; color: var(--faint); }
+.wl-page .wl-more { margin-top: 64px; }
+.wl-page .wl-more h2 { font-family: var(--display); font-weight: 600; color: var(--hi); font-size: 23px; margin: 0 0 14px; }
+@media (max-width: 1080px) {
+  .wl-page .page-head h1 { max-width: none; }
+}
+
+.page-head { margin: 0 0 40px; }
+.page-head h1, .nf h1 {
+  font-family: var(--display); font-weight: 600; color: var(--hi);
+  font-size: clamp(34px, 5.2vw, 58px); line-height: 1.04; letter-spacing: .01em; margin: 10px 0 16px;
+}
+.page-lead { font-size: 18px; line-height: 1.6; color: var(--text); max-width: 66ch; margin: 0 0 14px; }
+.page-meta { font-size: 14px; color: var(--dim); margin: 0 0 18px; }
+.page-meta a, .pn-hl a { color: var(--hot); }
+.page-head .cta-row { margin-top: 22px; }
+.dim { color: var(--dim); }
+
+.sec-title {
+  font-family: var(--display); font-weight: 600; color: var(--hi);
+  font-size: 26px; margin: 56px 0 16px; letter-spacing: .01em;
+}
+section:first-of-type > .sec-title { margin-top: 8px; }
+
+/* long-form text */
+.prose { color: var(--text); font-size: 16px; line-height: 1.72; }
+.prose h2 { font-family: var(--display); font-weight: 600; font-size: 23px; color: var(--hi); margin: 44px 0 12px; }
+.prose p, .prose ul { margin: 0 0 14px; }
+.prose ul { padding-left: 1.25em; }
+.prose li { margin: 7px 0; }
+.prose li::marker { color: var(--bronze); }
+.prose strong { color: var(--hi); font-weight: 600; }
+.prose a { color: var(--hot); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.prose a:hover { color: var(--gold); }
+.legal { max-width: 74ch; }
+
+/* patch notes */
+.pn-jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.pn-jump a {
+  border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px;
+  font-size: 13px; color: var(--dim); text-decoration: none; transition: color .15s, border-color .15s;
+}
+.pn-jump a:hover, .pn-jump a:focus-visible { color: var(--hi); border-color: var(--line-hi); }
+.pn-month {
+  font-family: var(--display); font-weight: 600; font-size: 22px; color: var(--gold);
+  margin: 48px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--line); scroll-margin-top: 84px;
+}
+.pn {
+  background: var(--deep); border: 1px solid var(--line); border-radius: 12px;
+  padding: 20px 24px; margin: 0 0 14px; scroll-margin-top: 84px;
+}
+.pn:target { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+.pn h3 { margin: 0; font-size: 19px; line-height: 1.3; font-weight: 700; color: var(--hi); }
+.pn h3 a { color: inherit; text-decoration: none; }
+.pn h3 a:hover { color: var(--gold); }
+.pn-meta { margin: 5px 0 12px; font-size: 13px; color: var(--dim); }
+.pn-ver { font-family: var(--display); color: var(--gold); letter-spacing: .02em; }
+.pn-hl { margin: 0 0 10px; color: var(--hi); line-height: 1.6; }
+.pn ul { margin: 0; padding-left: 1.2em; color: var(--text); line-height: 1.6; font-size: 15px; }
+.pn li { margin: 5px 0; }
+.pn li::marker { color: var(--bronze); }
+
+/* press kit */
+.facts {
+  display: grid; grid-template-columns: max-content 1fr; gap: 12px 28px; margin: 0;
+  padding: 22px 26px; background: var(--deep); border: 1px solid var(--line); border-radius: 12px;
+}
+.facts dt { font-size: 14px; color: var(--dim); }
+.facts dd { margin: 0; color: var(--hi); }
+.facts a { color: var(--hot); }
+.shots, .art { display: grid; gap: 18px; }
+.shots { grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); }
+.art { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.shots figure, .art figure { margin: 0; }
+.shots img, .art img {
+  display: block; width: 100%; height: auto; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--deep); transition: border-color .15s;
+}
+.art img { aspect-ratio: 16 / 10; object-fit: contain; padding: 10px; }
+.shots a:hover img, .art a:hover img { border-color: var(--gold); }
+.art .checker img { background: repeating-conic-gradient(#1b1813 0 25%, #25201a 0 50%) 0 0 / 18px 18px; }
+.shots figcaption, .art figcaption { margin-top: 8px; font-size: 13px; line-height: 1.45; color: var(--text); }
+.press-video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--line); border-radius: 10px; }
+.dl-row { margin: 10px 0 0; font-size: 14px; }
+.dl-row a { color: var(--hot); }
+
+/* 404 */
+.nf { text-align: center; padding: 48px 0 24px; }
+.nf .page-lead { margin: 0 auto 8px; }
+.nf .cta-row { justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+
+.foot-note { margin: 0; font-size: 13px; color: var(--dim); }
+
+@media (max-width: 760px) {
+  .sub-page main.page { padding: 92px 0 56px; }
+  .sub-page .nav-links { display: none; }
+  .facts { grid-template-columns: 1fr; gap: 2px; padding: 18px; }
+  .facts dd { margin-bottom: 12px; }
+  .pn { padding: 16px 18px; }
+  .sec-title { margin-top: 44px; }
+}

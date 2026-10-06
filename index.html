@@ -1,0 +1,242 @@
+<!doctype html>
+<!-- Launch wiring (one place, read by waitlist.js / home.js and copied to the generated pages):
+     data-play-url      the client, once a public server exists  → the main button becomes "Play free"
+     data-steam-url     the Steam page, once it is public         (used by the generated pages)
+     data-waitlist-url  POST endpoint for the e-mail form (tools/site/set-origin.mjs --api)
+     data-waitlist-mail fallback: with no endpoint the form hands over to the visitor's mail app
+     Built by .temp/site/v3/build.mjs: edit the v3 sources, not site/index.html. -->
+<html lang="en" data-play-url="" data-steam-url="" data-waitlist-url="" data-waitlist-mail="support@YOUR-DOMAIN">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deephold: an idle MMO with a player-run market</title>
+<meta name="description" content="A free idle MMO. Queue 30 actions and log off for 12 hours, sell what you make to other players, and risk your gear below Z6." />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Deephold" />
+<meta property="og:title" content="Deephold: an idle MMO with a player-run market" />
+<meta property="og:description" content="Players make and price every item. Below Z6 the deep can keep your gear. Free to play." />
+<meta property="og:image" content="https://emilswag.github.io/deephold-site/og.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="In-game fight: a dwarf in gold plate points his sword at the Ember Drake in a cave arena, both health bars along the top." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Deephold: an idle MMO with a player-run market" />
+<meta name="twitter:description" content="Players make and price every item. Below Z6 the deep can keep your gear. Free to play." />
+<meta name="twitter:image" content="https://emilswag.github.io/deephold-site/og.jpg" />
+<meta name="twitter:image:alt" content="In-game fight: a dwarf in gold plate points his sword at the Ember Drake in a cave arena, both health bars along the top." />
+<!--
+  AT DEPLOY, three values need the real origin and cannot be filled in from
+  here. A crawler never runs the page's JavaScript, so these have to be static:
+    <link rel="canonical" href="https://emilswag.github.io/deephold-site/" />
+    <meta property="og:url" content="https://emilswag.github.io/deephold-site/" />
+    og:image / twitter:image -> absolute URLs (Twitter rejects relative ones).
+-->
+
+<meta name="theme-color" content="#0B0A08" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=14" />
+<link rel="stylesheet" href="home.css?v=2720cc15" />
+<link rel="preload" as="image" href="media/shots/combat.webp" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Deephold",
+  "description": "A free idle MMO with a player-run market, a 30-action queue that runs offline, and expeditions where gear can be lost below Z6.",
+  "genre": ["Idle", "MMORPG", "Role-playing"],
+  "gamePlatform": ["PC", "Web browser"],
+  "playMode": "MultiPlayer",
+  "applicationCategory": "Game",
+  "operatingSystem": "Windows, Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder" }
+}
+</script>
+</head>
+<body class="home3">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="brand-word">DEEPHOLD</span></a>
+    <nav class="nav-links" aria-label="Site">
+      <a href="guides/">Guides</a><a href="patch-notes/">Patch notes</a><a href="press/">Press kit</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- 1 · Hero: the real combat screen, one line, the one action -->
+<section class="scr hero" id="top">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1>An idle MMO with a player-run market and gear you can lose.</h1>
+      <div class="hero-side">
+        <p class="lede">Mine, craft and fight while you're away, then sell what you make to other players.</p>
+        <div class="hero-act">
+          <a class="btn btn-gold btn-lg" href="#waitlist" data-cta>Join the waitlist</a>
+          <p class="status" data-status>Free to play. Browser and Windows. Not released yet.</p>
+        </div>
+      </div>
+    </div>
+    <figure class="frame hero-clip">
+      <video class="clip" autoplay muted loop playsinline preload="auto" poster="media/shots/combat.webp" width="1140" height="574" aria-label="Combat screen: a gold-armoured dwarf fights the Ember Drake while the gear panel and health bars update.">
+        <source src="media/clips/combat.webm" type="video/webm" />
+      </video>
+      <figcaption>Combat screen, recorded in game.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 2 · Idle: the queue and what comes back -->
+<section class="scr idle" id="idle">
+  <div class="wrap">
+    <div class="scr-head">
+      <h2>It keeps playing after you log off.</h2>
+      <p>Every skill shares one <b>30-slot</b> queue. It runs up to <b>12 hours</b> while you're away.</p>
+    </div>
+    <div class="idle-media">
+      <figure class="frame">
+        <video class="clip" muted loop playsinline preload="none" poster="media/shots/queue.webp" data-src="media/clips/queue.webm" width="658" height="600" aria-label="The action queue: mining, smelting and smithing jobs lined up and ticking down."></video>
+      </figure>
+      <figure class="frame">
+        <img class="crop-report" src="media/v2/shots/02_offline_haul_8h.webp" width="1600" height="900" loading="lazy" decoding="async" alt="The 'While you were away' report: away 8 hours, 7,875 actions completed, Mining 90 to 91, 8,283 rune ore." />
+        <figcaption>Back after 8 hours: 7,875 actions done.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · Expeditions: the depth ladder, straight from the Kel Duram shaft -->
+<section class="scr deep" id="deep">
+  <div class="wrap">
+    <div class="scr-head">
+      <h2>Below zone 6, the deep can keep your gear.</h2>
+      <p>Lose a fight there and each item breaks or stays down as Lost Cargo. You get 12 hours to recover it. Then anyone can.</p>
+    </div>
+    <div class="deep-grid">
+      <div class="ladder" data-ladder>
+        <p class="ladder-cap"><span>Kel Duram shaft</span><span>Mining level needed</span></p>
+        <ol>
+          <li class="band safe">Safe</li>
+          <li class="z safe" style="--lv:10"><b>Z1</b><span class="ore">Iron</span><span class="bar"><i></i></span><span class="lv">10</span></li>
+          <li class="z safe" style="--lv:20"><b>Z2</b><span class="ore">Coal, glowcap</span><span class="bar"><i></i></span><span class="lv">20</span></li>
+          <li class="z safe" style="--lv:35"><b>Z3</b><span class="ore">Cobalt, rune essence</span><span class="bar"><i></i></span><span class="lv">35</span></li>
+          <li class="z safe" style="--lv:45"><b>Z4</b><span class="ore">Cobalt</span><span class="bar"><i></i></span><span class="lv">45</span></li>
+          <li class="z safe" style="--lv:55"><b>Z5</b><span class="ore">Mithril</span><span class="bar"><i></i></span><span class="lv">55</span></li>
+          <li class="band risk">Gear at risk. Insurance: 8% of its value.</li>
+          <li class="z risk" style="--lv:68"><b>Z6</b><span class="ore">Orichalcum</span><span class="bar"><i></i></span><span class="lv">68</span></li>
+          <li class="z risk" style="--lv:78"><b>Z7</b><span class="ore">Orichalcum, duskglass</span><span class="bar"><i></i></span><span class="lv">78</span></li>
+          <li class="z risk" style="--lv:86"><b>Z8</b><span class="ore">Adamant, cut gems</span><span class="bar"><i></i></span><span class="lv">86</span></li>
+          <li class="band edge">Gear at risk. No insurance.</li>
+          <li class="z edge" style="--lv:93"><b>Z9</b><span class="ore">Starmetal, relics</span><span class="bar"><i></i></span><span class="lv">93</span></li>
+          <li class="z edge" style="--lv:97"><b>Z10</b><span class="ore">Starmetal, relics</span><span class="bar"><i></i></span><span class="lv">97</span></li>
+        </ol>
+      </div>
+      <figure class="frame">
+        <img class="crop-deep" src="media/v2/shots/06_deep_expeditions.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Expedition setup in game: three shafts to pick from, the depth guide with safe, risked and frontier bands, and depth buttons Z1 to Z10." />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · Market: players set the prices -->
+<section class="scr market" id="market">
+  <div class="wrap market-grid">
+    <div class="scr-head">
+      <h2>No NPC shops. Players set every price.</h2>
+      <p>Every item was made or found by a player. Buy and sell orders meet on an order book. Fees: 1% to list, 5% on sale.</p>
+    </div>
+    <figure class="frame">
+      <video class="clip" muted loop playsinline preload="none" poster="media/shots/trade.webp" data-src="media/clips/trade.webm" width="656" height="560" aria-label="The market order book: buy and sell orders for an item, with prices and quantities set by players."></video>
+    </figure>
+  </div>
+</section>
+
+<!-- 5 · Money, said plainly + proof the game is moving -->
+<section class="scr free" id="free">
+  <div class="wrap free-grid">
+    <div class="free-table">
+      <h2>Free to play. Here's all that Patron adds.</h2>
+      <table>
+        <thead><tr><th scope="col"><span class="vh">Feature</span></th><th scope="col">Free</th><th scope="col">Patron, $6.99/mo</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">XP</th><td>normal</td><td>+15%</td></tr>
+          <tr><th scope="row">Offline progress</th><td>12 h</td><td>72 h</td></tr>
+          <tr><th scope="row">Queue slots</th><td>30</td><td>60</td></tr>
+          <tr><th scope="row">Market orders</th><td>8</td><td>20</td></tr>
+          <tr><th scope="row">Bank tabs</th><td>1</td><td>3</td></tr>
+          <tr><th scope="row">Gear loadouts</th><td>1</td><td>3</td></tr>
+          <tr class="never"><th scope="row">Gold, items, drop rates</th><td>never sold</td><td>never sold</td></tr>
+        </tbody>
+      </table>
+      <p class="fine">Patron is web only. The Steam version sells nothing. All 11 skins are earned in play.</p>
+    </div>
+    <div class="updates">
+      <h2>Patch notes</h2>
+      <ul class="pn-list">
+<li><a href="patch-notes/#v0-360-3">Honest ledgers</a><span class="pn-meta">v0.360.3, <time datetime="2026-09-26">26 Sept 2026</time></span><p>Collection, Bestiary and Achievements now count only what the Hold can give you today, so every total can be finished.</p></li>
+<li><a href="patch-notes/#v0-360-2">Kiln coin</a><span class="pn-meta">v0.360.2, <time datetime="2026-09-26">26 Sept 2026</time></span><p>Ember drakes drop a little more gold, so the Drake Kiln stays the best-paying solo delve.</p></li>
+<li><a href="patch-notes/#v0-360-1">Honest coin</a><span class="pn-meta">v0.360.1, <time datetime="2026-09-26">26 Sept 2026</time></span><p>Until an item has traded, its Market value now rises with its tier, so deeper ore, bars and draughts are worth more than starter ones.</p></li>
+</ul>
+      <a class="more" href="patch-notes/">All patch notes</a>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · The one ask + short answers -->
+<section class="scr join" id="join">
+  <div class="wrap join-grid">
+    <div class="join-form" id="waitlist" data-prelaunch>
+      <h2>One email on launch day.</h2>
+      <form class="wl-form" data-waitlist method="post" action="#waitlist" novalidate>
+        <label class="vh" for="wl-email">Email address</label>
+        <div class="wl-row">
+          <input class="wl-input" id="wl-email" type="email" name="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="you@somewhere.com" required aria-describedby="wl-note" />
+          <button class="btn btn-gold" type="submit"><span data-label>Join the waitlist</span></button>
+        </div>
+        <input class="wl-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="source" value="site_waitlist" />
+        <p class="wl-msg" data-msg role="status" aria-live="polite"></p>
+        <p class="wl-note" id="wl-note">No newsletter, no partners, one-click unsubscribe. <a href="legal/privacy/">How the address is handled</a>.</p>
+        <div class="wl-done" aria-live="polite">
+          <p class="wl-done-h"><span class="tick" aria-hidden="true">✓</span>You're on the list.</p>
+          <p>One email to <b data-done-email>you</b> on launch day. Nothing else.</p>
+          <button class="wl-reset" type="button" data-reset>Not you? Use another address.</button>
+          <p class="wl-next">While you wait: <a href="guides/first-hour.html">the first-hour guide</a>.</p>
+        </div>
+      </form>
+    </div>
+    <div class="faq">
+      <h2 class="faq-h">Questions</h2>
+      <dl>
+        <div><dt>Can I play with friends?</dt><dd>Yes: parties, guilds, group expeditions and the Breach world boss.</dd></div>
+        <div><dt>Was AI used to make it?</dt><dd>Yes, for some models, textures, animations and art. People reviewed and edited every piece. <a href="press/#ai">Full disclosure</a>.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span class="brand-word small">DEEPHOLD</span>
+    <p>Idle MMO with a player-run market. Free to play.</p>
+    <nav class="foot-links" aria-label="More"><a href="guides/">Guides</a><a href="patch-notes/">Patch notes</a><a href="press/">Press kit</a><a href="legal/privacy/">Privacy</a><a href="legal/terms/">Terms</a></nav>
+  </div>
+</footer>
+
+<script src="waitlist.js?v=1" defer></script>
+<script src="home.js?v=2720cc15" defer></script>
+</body>
+</html>

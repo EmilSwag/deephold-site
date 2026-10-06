@@ -1,0 +1,619 @@
+/* ============================================================
+   Deephold landing.
+   Palette and type from the game itself.
+
+   No card containers. Hierarchy comes from type scale, hairlines
+   and negative space - a page of bordered rounded boxes is the
+   house style of every generated landing page, and it reads as
+   one.
+   ============================================================ */
+
+:root {
+  --void: #0B0A08;
+  --deep: #100E0B;
+  --line: #241E17;
+  --line-hi: #3A3025;
+
+  --gold: #D4AF37;
+  --hot: #F2C84B;
+  --bronze: #B0763B;
+  --ember: #E8842A;
+
+  --text: #E7DCC8;
+  --hi: #F7F0E2;
+  --dim: #948A78;
+  --faint: #635B4E;
+
+  --ok: #63B84F;
+
+  --display: 'Pixelify Sans', ui-monospace, monospace;
+  --body: 'Golos Text', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --wrap: 1280px;
+  /* The page's side gutter. Full-bleed elements line their content up with
+     this rather than with the viewport edge. */
+  --gutter: 28px;
+
+  /* Built-in CSS easings are too weak to read as intentional. */
+  --out: cubic-bezier(0.23, 1, 0.32, 1);
+  --inout: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+/* The nav is fixed and 65px tall; without this every in-page anchor (and the
+   waitlist's focus-scroll) lands with its heading under the bar on phones,
+   where the band padding is smaller than the nav. */
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, video { max-width: 100%; display: block; }
+a { color: var(--gold); text-decoration: none; }
+
+.wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+/* Was clamp(72px, 9vw, 132px): 264px of nothing between every pair of
+   sections read as the page stopping and restarting rather than as air. */
+.band { padding: clamp(56px, 6.4vw, 96px) 0; }
+
+.skip { position: absolute; left: -9999px; background: var(--gold); color: #1a1208; padding: 10px 16px; z-index: 100; }
+.skip:focus { left: 8px; top: 8px; }
+
+/* ---------- type ---------- */
+
+.h2 {
+  margin: 0 0 20px;
+  font-family: var(--display);
+  font-size: clamp(32px, 5.2vw, 62px);
+  line-height: 1.02;
+  color: var(--hi);
+}
+.one { margin: 0; font-size: 19px; color: var(--dim); max-width: 46ch; }
+/* The caveat under a claim: present, readable, not competing with it. */
+.one.small { margin-top: 14px; font-size: 15px; color: var(--faint); max-width: 52ch; }
+
+/* Rationed: three on the page, never one per section. */
+.eyebrow {
+  margin: 0 0 16px;
+  font-family: var(--display);
+  font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--bronze);
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 13px 26px;
+  border: 1px solid transparent; border-radius: 8px;
+  font-family: var(--display); font-size: 15px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  white-space: nowrap;           /* a wrapped CTA is a broken CTA */
+  cursor: pointer;
+  transition: transform 160ms var(--out), box-shadow 200ms var(--out), border-color 180ms var(--out);
+}
+.btn-lg { padding: 17px 34px; font-size: 17px; }
+.btn-sm { padding: 9px 18px; font-size: 13px; }
+
+.btn-gold {
+  color: #fff;                   /* white on gold, never near-black */
+  background: linear-gradient(180deg, var(--hot), var(--bronze));
+  border-color: #8a5f2d;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.28) inset, 0 8px 22px rgba(0,0,0,0.45);
+  text-shadow: 0 1px 2px rgba(60,35,5,0.55);
+}
+.btn-gold::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.4) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 560ms var(--out);
+}
+.btn-ghost { color: var(--text); background: rgba(255,255,255,0.03); border-color: var(--line-hi); }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0,0,0,0.55); }
+  .btn-gold:hover::after { transform: translateX(120%); }
+  .btn-ghost:hover { color: var(--hi); border-color: var(--bronze); transform: translateY(-2px); }
+}
+/* Instant feedback: the press must be felt, not inferred. */
+.btn:active { transform: scale(0.97); transition-duration: 100ms; }
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.cta-row.small { margin-top: 28px; }
+.cta-row.tiny { margin-left: auto; }
+
+/* ---------- nav ---------- */
+
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  border-bottom: 1px solid transparent;
+  transition: background-color 220ms var(--out), border-color 220ms var(--out);
+}
+.nav.stuck { background: rgba(11,10,8,0.88); backdrop-filter: blur(10px); border-bottom-color: var(--line); }
+.nav-in { display: flex; align-items: center; gap: 26px; height: 64px; }
+
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--hi); }
+.brand-mark {
+  width: 12px; height: 12px; flex: none;
+  background: linear-gradient(140deg, var(--hot), var(--bronze));
+  animation: spin 11s linear infinite;
+}
+@keyframes spin { from { transform: rotate(45deg); } to { transform: rotate(405deg); } }
+.brand-word { font-family: var(--display); font-size: 18px; letter-spacing: 0.22em; }
+.brand-word.small { font-size: 15px; color: var(--dim); }
+
+.nav-links { display: flex; gap: 22px; margin-left: auto; }
+.nav-links a { color: var(--dim); font-size: 15px; position: relative; transition: color 180ms var(--out); }
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; right: 100%; bottom: -4px; height: 1px;
+  background: var(--gold); transition: right 240ms var(--out);
+}
+.nav-cta { display: flex; gap: 8px; }
+@media (hover: hover) and (pointer: fine) {
+  .nav-links a:hover { color: var(--hi); }
+  .nav-links a:hover::after { right: 0; }
+}
+
+/* ---------- 1 · hero ---------- */
+
+.hero { position: relative; min-height: 100dvh; display: flex; align-items: center; overflow: hidden; }
+.hero-art {
+  position: absolute; inset: -8% 0 0;
+  width: 100%; height: 116%;
+  object-fit: cover; object-position: center 62%;
+  will-change: transform;
+  animation: fadeIn 1.6s var(--out) both;
+  /* The painting this replaced was lit for a poster; a cave arena is lit for
+     play, which is dimmer. A small lift lets the fight read through the veil
+     without touching the headline's contrast, since the veil sits above it. */
+  filter: brightness(1.28) saturate(1.08) contrast(1.04);
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.hero-veil {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(11,10,8,0.92) 0%, rgba(11,10,8,0.55) 38%, rgba(11,10,8,0.5) 62%, rgba(11,10,8,0.94) 100%),
+    radial-gradient(120% 80% at 50% 42%, transparent 28%, rgba(11,10,8,0.62) 100%);
+}
+.hero-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 140px; background: linear-gradient(180deg, transparent, var(--void)); }
+.hero-in { position: relative; z-index: 3; padding-top: 88px; padding-bottom: 64px; }
+
+.embers { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.ember {
+  position: absolute; bottom: -12px;
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--hot); opacity: 0;
+  animation: rise linear infinite;
+}
+@keyframes rise {
+  0%   { transform: translate3d(0,0,0); opacity: 0; }
+  12%  { opacity: 0.8; }
+  100% { transform: translate3d(var(--dx, 20px), -96vh, 0); opacity: 0; }
+}
+.embers.soft .ember { background: var(--ember); }
+
+.hero-h1 {
+  margin: 0 0 18px;
+  font-family: var(--display);
+  font-size: clamp(48px, 9.4vw, 122px);
+  line-height: 0.96;
+  color: #fff;
+  text-shadow: 0 4px 44px rgba(0,0,0,0.82);
+}
+.hero-h1 .ln { display: block; overflow: hidden; }
+.hero-h1 .ln > span { display: block; transform: translateY(105%); animation: wipe 760ms var(--out) forwards; }
+.hero-h1 .ln:nth-child(1) > span { animation-delay: 120ms; }
+.hero-h1 .ln:nth-child(2) > span { animation-delay: 210ms; }
+.hero-h1 .ln:nth-child(3) > span { animation-delay: 300ms; }
+.hero-h1 .hot > span { color: var(--hot); text-shadow: 0 0 46px rgba(242,200,75,0.32); }
+@keyframes wipe { to { transform: translateY(0); } }
+
+.hero-sub {
+  max-width: 40ch; margin: 0 0 28px;
+  font-size: clamp(18px, 1.8vw, 23px); color: #D6CCBA;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.8);
+  animation: up 620ms var(--out) 520ms both;
+}
+.hero-sub em { color: var(--hot); font-style: italic; }
+@keyframes up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+.hero .cta-row { animation: up 620ms var(--out) 640ms both; }
+
+.counters {
+  display: flex; flex-wrap: wrap; gap: 6px 38px;
+  margin: 34px 0 0; padding: 0; list-style: none;
+  animation: up 620ms var(--out) 760ms both;
+}
+.counters li { display: flex; align-items: baseline; gap: 8px; color: var(--dim); font-size: 15px; }
+.counters b { font-family: var(--display); font-size: 27px; color: var(--gold); font-variant-numeric: tabular-nums; }
+
+/* ---------- 2 · marquee strip ---------- */
+
+.strip {
+  padding: 30px 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--void), #130F0A 50%, var(--void));
+}
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee + .marquee { margin-top: 14px; }
+/*
+ * The spacing is a margin on each tile, NOT `gap`, and that is the difference
+ * between a loop and a stutter. With `gap`, a track of 2N tiles is
+ * 2N items + (2N-1) gaps, so half of it is one gap SHORTER than the first
+ * pass of N items + N gaps. `translateX(-50%)` then lands half a gap off the
+ * seam and the strip visibly jumps every cycle — 13px, once per loop, on the
+ * one element of the page that is pure spectacle. A trailing margin makes
+ * every tile occupy the same width and the halves exact.
+ */
+.marquee-track { display: flex; width: max-content; animation: slide linear infinite; }
+.mq { margin-right: 26px; }
+/* The second row runs the other way, so the strip reads as a crowd rather
+   than a conveyor. */
+.marquee.rev .marquee-track { animation-name: slide-rev; }
+@keyframes slide { to { transform: translate3d(-50%, 0, 0); } }
+@keyframes slide-rev { from { transform: translate3d(-50%, 0, 0); } to { transform: none; } }
+.mq img { width: 72px; height: 72px; object-fit: contain; transition: transform 220ms var(--out); }
+@media (hover: hover) and (pointer: fine) { .mq:hover img { transform: scale(1.22) translateY(-5px); } }
+
+/* ---------- 3 · how it works ----------
+   A numbered list on hairlines, not three cards. The page used to open on what
+   is WRONG with other idle games, to an audience that may never have played
+   one; this says what you do here first, and keeps the complaint to one line
+   underneath. */
+
+.steps { list-style: none; margin: 34px 0 0; padding: 0; }
+.steps li {
+  display: grid; grid-template-columns: 54px 1fr; gap: 4px 18px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+.steps li:last-child { border-bottom: 1px solid var(--line); }
+.steps b { grid-row: span 2; font-family: var(--display); font-size: 26px; color: var(--faint); line-height: 1.1; }
+.steps h3 { margin: 0; font-family: var(--display); font-size: clamp(18px, 1.8vw, 23px); color: var(--hi); font-weight: 400; }
+.steps p { margin: 0; color: var(--dim); font-size: 16px; }
+
+.turn { margin: 30px 0 0; font-family: var(--display); font-size: clamp(20px, 2.3vw, 28px); color: var(--hot); }
+
+/* ---------- 4 · split ----------
+   The media column is sized by the clip inside it now, so the text column gets
+   the larger share rather than being squeezed by a full-bleed screenshot. */
+
+.split-in { display: grid; grid-template-columns: 1fr auto; gap: clamp(30px, 4.5vw, 66px); align-items: center; }
+.split-in > .media { min-width: 0; }
+
+.media { margin: 0; position: relative; }
+/*
+ * NEVER UPSCALED, AND NEVER ONE SHARED RATIO.
+ *
+ * Each clip is cropped to its own subject, so each has its own size and shape
+ * (see apps/web/e2e/site-media-frames.mjs). `width: auto` plus the width and
+ * height attributes in the markup means a clip draws at its captured size and
+ * only ever scales DOWN, on a narrow screen. Blowing a 656px panel up to fill
+ * a 1180px column would undo the whole point of cropping it: the text would be
+ * large and soft instead of small and sharp.
+ *
+ * Those same attributes are what reserves the box. A <video> with no poster
+ * attribute and no loaded metadata renders at the intrinsic default of
+ * 300x150, and with the poster deferred to an observer every figure would
+ * start 150px tall and grow under the reader as each clip landed.
+ */
+.shot {
+  width: auto; max-width: 100%; height: auto;
+  margin-inline: auto;
+  border: 1px solid var(--line-hi); border-radius: 12px;
+  background: var(--deep);
+  box-shadow: 0 30px 66px rgba(0,0,0,0.6);
+}
+.media figcaption { margin-top: 12px; font-size: 14px; color: var(--faint); text-align: center; }
+.media figcaption b { color: var(--text); font-weight: 600; }
+/* In a split, the caption belongs under its own column, not the page. */
+.split-in .media figcaption { text-align: left; }
+
+/* ---------- 2 · proof strip (first thing under the hero) ----------
+
+   It overlaps the hero on purpose. A landing page for a game should have the
+   game in the first screen, and a panel rising out of the artwork puts it
+   there without shrinking the headline. The overlap is dropped below 900px,
+   where the hero is tall relative to the viewport and the two would collide. */
+
+.band-tight { padding-top: clamp(34px, 4vw, 56px); padding-bottom: clamp(44px, 5vw, 76px); }
+.proof figcaption { font-size: 16px; color: var(--dim); }
+.proof figcaption b { color: var(--hi); font-family: var(--display); font-weight: 400; }
+.proof .shot { box-shadow: 0 40px 90px rgba(0,0,0,0.75); }
+
+/*
+ * The lift and the hero's bottom padding are ONE number, because they are two
+ * halves of the same measurement. A fixed negative margin ignores how much
+ * room the hero actually has, and the hero's content is vertically centred in
+ * 100dvh: on a short window (1920x700 is an ordinary laptop at 125% scaling)
+ * there is no slack at the bottom and the clip landed 96px on top of the
+ * counters. Reserving the lift as padding first means the clearance is
+ * whatever the hero has spare, plus 56px, at every size.
+ */
+@media (min-width: 900px) {
+  /* Raising the lift raises the clip into the first screen without eating the
+     clearance, because the padding above tracks it. */
+  :root { --proof-lift: clamp(110px, 12vw, 190px); }
+  .hero-in { padding-bottom: calc(var(--proof-lift) + 56px); }
+  .proof {
+    position: relative; z-index: 6;
+    margin-top: calc(var(--proof-lift) * -1);
+    padding-top: 0;
+  }
+}
+
+/* ---------- 5 · people ---------- */
+
+/* Stacked, not split. "Big headline left, small paragraph floating right" is
+   the section-header pattern every generated page reaches for, and the floater
+   aligns to nothing. One message, one column. */
+.people-head { margin-bottom: 36px; }
+.people-head .one { margin-top: 14px; }
+.people .media + .duo { margin-top: 30px; }
+
+/* ---------- 6 · stacked features (was a two-up pair) ----------
+ *
+ * These used to sit side by side, and measuring what that cost settled it: a
+ * ~950px crop in a 599px column renders at 0.63, which puts the game's own
+ * 14px UI text at 8.7px. Three of the ten clips were below the legibility
+ * floor ON DESKTOP, the widest viewport, while the tablet layout — which
+ * stacks them — was fine at 10.5px.
+ *
+ * Cropping each clip tighter was the alternative and it does not survive
+ * contact with the content: the friends row IS the full width (dot, name, what
+ * they are doing, whisper / invite / profile), and dropping either end removes
+ * the thing the caption is pointing at.
+ *
+ * So they stack and draw at 1.00. The rhythm that pairing was providing now
+ * comes from the clips' own shapes, which run from 1.48 to 4.07.
+ */
+.duo { display: grid; grid-template-columns: 1fr; gap: 34px; align-items: start; }
+.duo figcaption { font-size: 15px; color: var(--dim); }
+.duo figcaption b { color: var(--hi); font-family: var(--display); font-weight: 400; }
+
+#play-it .media + .media { margin-top: 34px; }
+#play-it .media + .duo { margin-top: 34px; }
+#play-it > .wrap > .media figcaption { font-size: 16px; }
+
+/* ---------- 7 · scroll rail ---------- */
+
+.rail-band { padding-bottom: clamp(56px, 7vw, 100px); }
+/*
+ * A full-bleed scroller that still starts on the page's content column, and
+ * two things are needed for that.
+ *
+ * The inline padding matches what `.wrap` would give at this width, so the
+ * first item lines up under the heading instead of against the viewport edge.
+ *
+ * `scroll-padding-inline` matches it, and without that the rail undoes its own
+ * padding: `scroll-snap-type: x mandatory` snaps to the first item's start edge
+ * on load, which means scrolling the container by exactly its padding-left and
+ * parking item one at x=0. The measured symptom was a 28px padding and a
+ * `scrollLeft` of 28.
+ */
+.rail {
+  display: flex; gap: 14px;
+  margin: 34px 0 0;
+  padding-block: 4px 18px;
+  padding-inline: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter)));
+  scroll-padding-inline: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter)));
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar { display: none; }
+/*
+ * The items used to carry `.reveal` each. IntersectionObserver measures against
+ * the VIEWPORT, so the four items parked off the right edge of the rail never
+ * intersected and sat at opacity 0 permanently - a row of blank space where
+ * half the content was. The rail as a whole is what enters the viewport, so it
+ * carries the trigger and the children stagger off it.
+ */
+.rail.reveal { opacity: 1; transform: none; }
+.rail li {
+  flex: none; scroll-snap-align: start;
+  width: 288px; padding: 22px 0 0;
+  border-top: 2px solid var(--line-hi);
+  color: var(--dim); font-size: 16px;
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 520ms var(--out), transform 520ms var(--out), border-color 200ms var(--out);
+}
+.rail.in li { opacity: 1; transform: none; }
+.rail.in li:nth-child(1) { transition-delay: 0ms; }
+.rail.in li:nth-child(2) { transition-delay: 55ms; }
+.rail.in li:nth-child(3) { transition-delay: 110ms; }
+.rail.in li:nth-child(4) { transition-delay: 165ms; }
+.rail.in li:nth-child(5) { transition-delay: 220ms; }
+.rail.in li:nth-child(6) { transition-delay: 275ms; }
+.rail.in li:nth-child(7) { transition-delay: 330ms; }
+.rail.in li:nth-child(8) { transition-delay: 385ms; }
+.rail li b { display: block; margin-bottom: 8px; font-family: var(--display); font-size: 23px; color: var(--hi); font-weight: 400; }
+@media (hover: hover) and (pointer: fine) { .rail li:hover { border-top-color: var(--gold); } }
+
+/* ---------- 8 · status ---------- */
+
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 34px; }
+/* A second question under the same "no theatre" heading, at two-thirds size so
+   it reads as part of that answer rather than as a new section. */
+.h2.sub { margin-top: clamp(56px, 6vw, 84px); font-size: clamp(26px, 3.4vw, 40px); }
+.cols h3 { margin: 0 0 12px; font-family: var(--display); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; }
+.cols h3.ok { color: var(--ok); }
+.cols h3.wip { color: var(--ember); }
+.cols p { margin: 0; color: var(--dim); }
+
+/* ---------- 9 · cta ---------- */
+
+.cta { position: relative; overflow: hidden; text-align: center; background: linear-gradient(180deg, var(--void), #150F08); }
+.cta-in { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.cta-h { margin: 0; font-family: var(--display); font-size: clamp(38px, 6.6vw, 84px); line-height: 1; color: var(--hi); }
+.cta p { margin: 0; color: var(--dim); font-size: 18px; }
+.cta .cta-row { justify-content: center; margin-top: 8px; }
+
+/* ---------- footer ---------- */
+
+.foot { border-top: 1px solid var(--line); padding: 26px 0; }
+.foot-in { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.foot p { margin: 0; color: var(--faint); font-size: 14px; }
+
+/* ---------- reveal ---------- */
+
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 620ms var(--out), transform 620ms var(--out); }
+.reveal.in { opacity: 1; transform: none; }
+.zoom { transform: translateY(24px) scale(0.97); }   /* never from scale(0) */
+.zoom.in { transform: none; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1080px) {
+  /* The media is sized by its own clip, so at this width the two columns stop
+     fitting side by side long before a percentage grid would say so. */
+  .split-in { grid-template-columns: 1fr; }
+  /* Media first: the clip is the hook and it keeps the scroll moving...  */
+  .split-in .media { order: -1; }
+  /* ...except in the explainer, where the clip IS the answer. Leading with it
+     shows a mining screen to somebody who has not been told what the game is
+     yet. The heading and the three steps go first there. */
+  #how .media { order: 0; margin-top: 34px; }
+  .split-in .media figcaption { text-align: center; }
+  .cols { grid-template-columns: 1fr; gap: 26px; }   /* .duo already stacks */
+  .nav-links { display: none; }
+}
+@media (max-width: 620px) {
+  :root { --gutter: 20px; }   /* .wrap and .rail both read this */
+  body { font-size: 16px; }
+  .steps li { grid-template-columns: 40px 1fr; }
+  .counters { gap: 4px 24px; }
+  .counters b { font-size: 22px; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .btn-lg, .cta-row .btn { width: 100%; }
+  .nav-cta .btn { width: auto; }
+  .rail li { width: 232px; }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .zoom, .rail li { opacity: 1; transform: none; transition: none; }
+  .hero-art, .hero-sub, .hero .cta-row, .counters { animation: none; opacity: 1; transform: none; }
+  .hero-h1 .ln > span { animation: none; transform: none; }
+  /* `.marquee.rev .marquee-track` sets animation-name at specificity (0,3,0),
+     so a bare `.marquee-track` here loses to it whatever the source order and
+     the reversed row keeps running. Match the specificity. */
+  .marquee-track, .marquee.rev .marquee-track, .brand-mark { animation: none; }
+  .embers { display: none; }
+  .btn, .mq img, .rail li, .nav-links a { transition: none; }
+  .btn:hover, .btn:active, .mq:hover img { transform: none; }
+}
+
+/* ── Community (Discord) ── P80 ─────────────────────────────── */
+.chan-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.chan-list li { padding: 12px 16px; border: 1px solid var(--line-hi); border-radius: 10px; background: rgba(255,255,255,0.02); color: var(--dim); }
+.chan-list b { display: block; margin-bottom: 2px; color: var(--hi); font-family: var(--display); font-weight: 400; }
+.discord-live { display: inline-flex; align-items: center; gap: 8px; margin: 16px 0 0; color: var(--dim); }
+.discord-live[hidden] { display: none; }
+.discord-live .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px rgba(99,184,79,0.18); }
+.discord-live b { color: var(--text); font-variant-numeric: tabular-nums; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 18px; }
+.foot-links a { color: var(--dim); text-decoration: none; }
+.foot-links a:hover, .foot-links a:focus-visible { color: var(--hot); }
+.pending-page { min-height: 100vh; display: flex; align-items: center; }
+
+/* ── Waitlist ── pre-launch e-mail capture ─────────────────────────────────
+   One form, straight after Status, because that is where "Steam page soon /
+   install link when the first server is up" raises the question this answers.
+   Same language as the rest of the page: type scale, hairlines, air. The field
+   is the one bordered box on the page, because an input has to look like one.
+   Shared with /waitlist/ (pages.css only adds that page's layout). */
+.wl-in { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(32px, 5vw, 84px); align-items: center; }
+.wl-copy .one { max-width: 50ch; }
+
+/* Visually hidden, still read out: the field's label. */
+.vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.wl-form { position: relative; margin: 30px 0 0; max-width: 560px; }
+.wl-row { display: flex; gap: 10px; }
+.wl-input {
+  flex: 1 1 auto; min-width: 0;
+  height: 52px; padding: 0 16px;
+  font: inherit; font-size: 17px; color: var(--hi);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line-hi); border-radius: 8px;
+  outline: none;
+  transition: border-color 180ms var(--out), box-shadow 180ms var(--out), background-color 180ms var(--out);
+}
+.wl-input::placeholder { color: var(--faint); }
+.wl-input:hover { border-color: var(--bronze); }
+.wl-input:focus-visible { border-color: var(--gold); background: rgba(255,255,255,0.045); box-shadow: 0 0 0 3px rgba(212,175,55,0.18); }
+.wl-form.is-invalid .wl-input { border-color: var(--ember); box-shadow: 0 0 0 3px rgba(232,132,42,0.16); }
+.wl-row .btn { flex: none; height: 52px; }
+/* The honeypot: a bot fills every field, a person never sees this one. Off-screen rather than
+   display:none so it still submits (that is the point) and never catches a tab stop. */
+.wl-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+.wl-note { margin: 12px 0 0; font-size: 14px; line-height: 1.5; color: var(--faint); }
+.wl-note a { color: var(--dim); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.wl-note a:hover { color: var(--hot); }
+.wl-msg { margin: 10px 0 0; font-size: 15px; color: var(--dim); }
+.wl-msg:empty { display: none; }
+.wl-msg[data-tone="error"] { color: var(--ember); }
+.wl-msg a { color: var(--hot); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Sending: the button stays where it is and dims; its label says what is happening. */
+.wl-form[data-state="busy"] .btn { pointer-events: none; opacity: 0.72; }
+.wl-form[data-state="busy"] .wl-input { pointer-events: none; }
+
+/* Done: the form folds into one line of type. The address is echoed so a typo is caught now,
+   not on launch day, and "not you?" undoes it. */
+.wl-done { display: none; }
+.wl-form[data-state="done"] .wl-row,
+.wl-form[data-state="done"] .wl-note,
+.wl-form[data-state="done"] .wl-msg { display: none; }
+.wl-form[data-state="done"] .wl-done { display: block; animation: up 520ms var(--out) both; }
+.wl-done-h { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; font-family: var(--display); font-size: clamp(26px, 3.2vw, 38px); line-height: 1.05; color: var(--hot); }
+.wl-done-h .tick { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--ok); color: #0B0A08; font-family: var(--body); font-weight: 800; font-size: 17px; line-height: 30px; text-align: center; box-shadow: 0 0 0 5px rgba(99,184,79,0.16); }
+.wl-done p { margin: 0; color: var(--dim); }
+.wl-done b { color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
+.wl-reset { display: inline-block; margin: 10px 0 0; padding: 0; border: 0; background: none; font: inherit; font-size: 14px; color: var(--dim); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.wl-reset:hover, .wl-reset:focus-visible { color: var(--hot); }
+.wl-done .cta-row { margin-top: 22px; }
+
+/* The three steps reuse .steps; alone in their column they need no top margin. */
+.wl-steps { margin: 0; }
+.wl-steps li { padding: 18px 0; }
+.wl-steps b { color: var(--bronze); }
+
+/* Once `data-play-url` is set the game is open and the waitlist folds away (waitlist.js). */
+[data-prelaunch][hidden] { display: none !important; }
+/* main.js hides the Wishlist buttons until the Steam URL exists; .btn sets display, so the
+   attribute alone would lose. */
+.btn[hidden] { display: none; }
+
+@media (max-width: 1080px) {
+  .wl-in { grid-template-columns: 1fr; gap: 36px; align-items: start; }
+}
+@media (max-width: 620px) {
+  .wl-row { flex-direction: column; }
+  .wl-row .btn { width: 100%; }
+  .wl-form { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wl-form[data-state="done"] .wl-done { animation: none; }
+  .wl-input { transition: none; }
+}
