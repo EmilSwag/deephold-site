@@ -44,27 +44,37 @@
 </div></nav>
 <main id="main" class="page">
 <div class="wrap stack">
-  <section class="panel hero-play">
-    <div class="hero-play__body"><span class="kicker">Browser version · Live</span><h1>Play Deephold now</h1>
-      <p class="lede">It runs in this browser. Make a name, pick a skill, start digging. Your progress keeps going after you close the tab.</p>
-      <div class="sg-row"><a class="btn btn--gold btn--lg" href="https://web-production-811eb.up.railway.app" data-play><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>Play free</a><a class="btn btn--ghost" href="../guides/first-hour.html">First hour guide</a></div>
-      <p class="dim" data-online-line></p></div>
-    <div class="hero-play__media"><video muted loop playsinline preload="none" poster="../media/shots/hero.webp" data-autoplay aria-label="Deephold gameplay"><source src="../media/clips/hero.webm" type="video/webm"></video></div>
+  <section class="login" aria-labelledby="pl-t">
+    <div class="login__view"><video muted loop playsinline preload="none" poster="../media/shots/hero.webp" data-autoplay aria-label="Deephold gameplay"><source src="../media/clips/hero.webm" type="video/webm"></video></div>
+    <div class="login__box"><i class="bk bk--tl"></i><i class="bk bk--tr"></i><i class="bk bk--bl"></i><i class="bk bk--br"></i>
+      <h1 id="pl-t">Welcome to Deephold</h1>
+      <p class="login__lede">Free to play. Runs in this tab. Your dwarf keeps digging after you close it.</p>
+      <div class="login__btns"><a class="btn btn--gold btn--lg" href="https://web-production-811eb.up.railway.app" data-play><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>New dwarf</a><a class="btn btn--stone btn--lg" href="https://web-production-811eb.up.railway.app" data-play>Existing dwarf</a></div>
+      <p class="login__micro">No download · Free to play · <a href="../guides/first-hour.html">First hour guide</a></p>
+      <p class="login__online" data-online-line></p>
+    </div>
   </section>
-  <section aria-labelledby="st-t"><div class="section__head"><h2 id="st-t">Three steps in</h2></div><ol class="steps">
-    <li class="panel"><h3>Make a name</h3><p>Pick a name and a look. Takes under a minute.</p></li>
-    <li class="panel"><h3>Queue the work</h3><p>Up to 30 actions: mine, smelt, smith, fight. They run one after another.</p></li>
-    <li class="panel"><h3>Close the tab</h3><p>Progress keeps going for up to 12 hours. Come back to the haul.</p></li>
-  </ol></section>
-  <section class="two" aria-label="Platforms">
-    <div class="panel plat"><div class="plat__top"><img src="../media/icons/tool_pickaxe_rune.webp" alt="" width="64" height="64" loading="lazy"><h3>Browser</h3><span class="badge badge--live">Live now</span></div><ul><li>Chrome, Edge, Firefox or Safari</li><li>Nothing to install</li><li>Free to play</li></ul><a class="btn btn--gold" href="https://web-production-811eb.up.railway.app" data-play><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>Play in browser</a></div>
-    <div class="panel plat" id="steam"><div class="plat__top"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.35 2.21a2.83 2.83 0 0 1 1.6-.49h.15l2.38-3.45v-.05a3.77 3.77 0 1 1 3.77 3.77h-.09l-3.4 2.42v.13a2.83 2.83 0 0 1-5.62.47L2.4 14.5A10 10 0 1 0 12 2Zm-4.73 15.17-1.22-.5a2.12 2.12 0 1 0 1.16-2.9l1.27.52a1.56 1.56 0 1 1-1.2 2.88Zm9.32-7.73a2.51 2.51 0 1 0-2.51 2.51 2.52 2.52 0 0 0 2.51-2.51Zm-4.39 0a1.89 1.89 0 1 1 1.88 1.88 1.89 1.89 0 0 1-1.88-1.88Z"/></svg><h3>Steam</h3><span class="badge badge--soon">Waitlist</span></div><p>The desktop version is heading to Steam. Leave an email and get one message when the page opens.</p><form class="wl" data-wl novalidate>
-  <input type="hidden" name="source" value="steam">
-  <div class="wl__row"><label class="sr-only" for="wl-3">Email</label><input class="input" id="wl-3" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-  <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-  <button class="btn btn--gold" type="submit">Join the waitlist</button></div>
-  <p class="wl__msg" role="status" aria-live="polite"></p>
-</form></div>
+  <section class="scroll quest-scroll" aria-labelledby="qj-t"><div class="scroll__paper">
+    <h2 class="ornament" id="qj-t">Quest: The first hour</h2>
+    <p class="quest__meta"><b>Start point:</b> this page. <b>Requirements:</b> none. <b>Length:</b> short. Most of it runs without you.</p>
+    <ol class="quest">
+      <li><img class="quest__ic" src="../media/icons/armor_helmet_rune.webp" alt="" width="64" height="64" loading="lazy"><p><b>Make a name.</b> Pick a name and a look. Takes under a minute.</p></li>
+      <li><img class="quest__ic" src="../media/icons/tool_pickaxe_bronze.webp" alt="" width="64" height="64" loading="lazy"><p><b>Queue the work.</b> Up to 30 actions: mine, smelt, smith, fight. They run one after another.</p></li>
+      <li><img class="quest__ic" src="../media/icons/torch_pitch.webp" alt="" width="64" height="64" loading="lazy"><p><b>Close the tab.</b> Progress keeps going for up to 12 hours.</p></li>
+      <li><img class="quest__ic" src="../media/icons/coin_ancient.webp" alt="" width="64" height="64" loading="lazy"><p><b>Come back to the haul.</b> Sell it on the market or smith it into something better.</p></li>
+    </ol>
+    <div class="quest__reward"><p class="quest__rh">Quest rewards</p><ul><li>A queue that works while you sleep</li><li>Your first market sale</li><li>A reason to come back tomorrow</li></ul></div>
+    <p class="quest__cta"><a class="btn btn--gold btn--lg" href="https://web-production-811eb.up.railway.app" data-play><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>Start the quest</a></p>
+  </div></section>
+  <section class="panel worlds" id="steam" aria-labelledby="ws-t">
+    <div class="panel__head"><img src="../media/icons/ring_starmetal.webp" alt="" width="64" height="64" loading="lazy"><h2 id="ws-t">Select a world</h2></div>
+    <div class="ledger-wrap"><table class="worlds__tbl">
+      <thead><tr><th scope="col">World</th><th scope="col">Where</th><th scope="col">Status</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+      <tbody>
+        <tr><td class="num worlds__n">301</td><td><b>Browser</b><span>Chrome, Edge, Firefox or Safari. Nothing to install.</span></td><td><span class="ws ws--live">Live</span></td><td class="r"><a class="btn btn--gold btn--sm" href="https://web-production-811eb.up.railway.app" data-play><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>Play</a></td></tr>
+        <tr><td class="num worlds__n">302</td><td><b>Steam</b><span>Desktop version. One email the day the page opens.</span></td><td><span class="ws ws--soon">Waitlist</span></td><td class="r"><a class="btn btn--stone btn--sm" href="#steam" data-steam><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.35 2.21a2.83 2.83 0 0 1 1.6-.49h.15l2.38-3.45v-.05a3.77 3.77 0 1 1 3.77 3.77h-.09l-3.4 2.42v.13a2.83 2.83 0 0 1-5.62.47L2.4 14.5A10 10 0 1 0 12 2Zm-4.73 15.17-1.22-.5a2.12 2.12 0 1 0 1.16-2.9l1.27.52a1.56 1.56 0 1 1-1.2 2.88Zm9.32-7.73a2.51 2.51 0 1 0-2.51 2.51 2.52 2.52 0 0 0 2.51-2.51Zm-4.39 0a1.89 1.89 0 1 1 1.88 1.88 1.89 1.89 0 0 1-1.88-1.88Z"/></svg>Join waitlist</a></td></tr>
+      </tbody>
+    </table></div>
   </section>
   <section class="two" aria-label="Free and Patron">
     <div class="panel"><div class="panel__head"><img src="../media/icons/coin_ancient.webp" alt="" width="64" height="64" loading="lazy"><h2>Free or Patron</h2></div><div class="panel__body"><table class="perks"><thead><tr><th>&nbsp;</th><th class="r">Free</th><th class="r">Patron</th></tr></thead><tbody>
@@ -75,6 +85,20 @@
 </tbody></table><p class="dim" style="margin:12px 0 0">Everything in the game is reachable for free. Patron is about comfort and speed.</p></div></div>
     <div class="panel"><div class="panel__head"><h2>Questions</h2></div><div class="faq"><details><summary>Is it free?</summary><div><p>Yes. The browser version is free to play. Patron is optional: longer offline time (72h instead of 12h), a bigger queue and +15% XP.</p></div></details><details><summary>Does it really keep going when I close the tab?</summary><div><p>Yes. Queue up to 30 actions and leave. Progress runs for up to 12 hours while you're away.</p></div></details><details><summary>Where is the Steam version?</summary><div><p>Coming. Join the Steam waitlist and you get one email the day the page opens.</p></div></details><details><summary>Are the other players real?</summary><div><p>Yes. The market, hiscores, guilds and the season boss are all shared with everyone online.</p></div></details></div></div>
   </section>
+  <section class="chat" aria-labelledby="chat-t" data-dialogue>
+  <div class="chat__head"><img src="../media/v2/portraits/forgeborn.webp" alt="" width="132" height="132" loading="lazy"></div>
+  <div class="chat__body">
+    <p class="chat__name" id="chat-t">Foreman</p>
+    <p class="chat__line">You've read enough. The rock won't dig itself, and the hold doesn't wait. So. Where to?</p>
+    <p class="chat__prompt">Select an option</p>
+    <ol class="chat__opts">
+      <li><a href="https://web-production-811eb.up.railway.app" data-play data-key="1"><kbd>1</kbd>Play free in the browser.</a></li>
+      <li><a href="../play/#steam" data-steam data-key="2"><kbd>2</kbd>Put me on the Steam waitlist.</a></li>
+      <li><a href="../community/" data-key="3"><kbd>3</kbd>Show me the hold first.</a></li>
+    </ol>
+    <p class="chat__hint">Press 1, 2 or 3. Old habits.</p>
+  </div>
+</section>
 </div>
 </main>
 <footer class="footer"><div class="wrap footer__in">
@@ -88,7 +112,7 @@
   <div class="panel__head"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.35 2.21a2.83 2.83 0 0 1 1.6-.49h.15l2.38-3.45v-.05a3.77 3.77 0 1 1 3.77 3.77h-.09l-3.4 2.42v.13a2.83 2.83 0 0 1-5.62.47L2.4 14.5A10 10 0 1 0 12 2Zm-4.73 15.17-1.22-.5a2.12 2.12 0 1 0 1.16-2.9l1.27.52a1.56 1.56 0 1 1-1.2 2.88Zm9.32-7.73a2.51 2.51 0 1 0-2.51 2.51 2.52 2.52 0 0 0 2.51-2.51Zm-4.39 0a1.89 1.89 0 1 1 1.88 1.88 1.89 1.89 0 0 1-1.88-1.88Z"/></svg><h2 id="sm-t">Steam waitlist</h2></div>
   <div class="panel__body"><p>The Steam page isn't up yet. Leave an email and get one message the day it opens. Nothing else.</p><form class="wl" data-wl novalidate>
   <input type="hidden" name="source" value="steam">
-  <div class="wl__row"><label class="sr-only" for="wl-4">Email</label><input class="input" id="wl-4" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+  <div class="wl__row"><label class="sr-only" for="wl-3">Email</label><input class="input" id="wl-3" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
   <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
   <button class="btn btn--gold" type="submit">Notify me</button></div>
   <p class="wl__msg" role="status" aria-live="polite"></p>

@@ -150,8 +150,20 @@
   $$('form[data-wl]').forEach((form) => {
     const msg = $('.wl__msg', form);
     const say = (t, state) => { if (msg) msg.textContent = t; form.dataset.state = state || ''; };
-    const done = () => say("You're on the list. One email when it opens. That's it.", 'done');
-    if (remembered && remembered.email) done();
+    // success = OSRS level-up message (parchment chatbox; fireworks only on a fresh signup)
+    const done = (fresh = true) => {
+      say(fresh ? "You're on the Steam waitlist. One email the day it opens." : '', 'done');
+      const old = $('.lvlup', form);
+      if (old) old.remove();
+      const box = document.createElement('div');
+      box.className = `lvlup${fresh ? ' is-fresh' : ''}`;
+      box.innerHTML = `<span class="lvlup__ic" aria-hidden="true"></span>
+<p class="lvlup__t">${fresh ? 'Congratulations, you just advanced a Patience level.' : "You're already on the Steam waitlist."}</p>
+<p class="lvlup__s">${fresh ? 'Your Patience level is now 2.' : 'Your Patience level is still 2.'} One email the day Steam opens. Nothing else.</p>
+<a class="lvlup__go" href="${esc(cfg.play || `${R}play/`)}" data-play>Click here to continue: play in your browser</a>`;
+      form.insertBefore(box, msg);
+    };
+    if (remembered && remembered.email) done(false);
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const input = $('input[type=email]', form);
@@ -237,7 +249,7 @@
     $$('[data-ticker]').forEach((el) => {
       const pickT = items.filter((i) => i.i).sort((a, b) => Math.abs(b.d) - Math.abs(a.d)).slice(0, 22);
       const row = pickT.map((it) => `<span class="ticker__it">${itemIcon(it)}<span>${esc(it.n)}</span>${value(it.v)}${delta(it.d)}</span>`).join('');
-      el.innerHTML = `<div class="ticker__track">${row}${row}</div>`;
+      el.innerHTML = `<span class="ticker__tag">Preview prices</span><div class="ticker__track">${row}${row}</div>`;
     });
 
     // home mini table
