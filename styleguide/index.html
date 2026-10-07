@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" data-play-url="https://web-production-811eb.up.railway.app" data-steam-url="" data-waitlist-url="" data-waitlist-mail="support@YOUR-DOMAIN" data-api-url="https://api-production-b342.up.railway.app" data-root="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Style guide · Deephold portal</title>
+<meta name="description" content="Deephold portal components.">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deephold">
+<meta property="og:title" content="Style guide · Deephold portal">
+<meta property="og:description" content="Deephold portal components.">
+<meta property="og:image" content="https://emilswag.github.io/deephold-site/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0A08">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="../favicon-64.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preload" href="../fonts/pixelify-sans-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/golos-text-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+<script defer src="../portal.js"></script>
+</head>
+<body data-page="styleguide">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap topbar__in">
+  <span class="status" data-status data-state="unknown"><i class="status__dot"></i><span data-status-text>World status</span></span>
+  <span class="topbar__sep topbar__hide-sm"></span>
+  <span class="topbar__hide-sm"><b>Season Ember 2026</b> · The Ember Sovereign is up</span>
+  <div class="topbar__acct"><a href="https://web-production-811eb.up.railway.app" data-play>Log in</a><span class="topbar__sep"></span><a href="https://web-production-811eb.up.railway.app" data-play>Create account</a></div>
+</div></div>
+<header class="banner banner--slim">
+  <img class="banner__bg" src="../media/v2/loops/great_forge.webp" alt="">
+  <div class="banner__in"><img class="banner__hero banner__hero--l" src="../media/v2/skins/forgeborn.webp" alt="" width="210" height="210"><img class="banner__hero banner__hero--r" src="../media/v2/skins/runeward_sentinel.webp" alt="" width="210" height="210">
+    <a class="banner__logo" href="../"><img src="../media/v2/logo.webp" alt="Deephold home"></a>
+  </div>
+</header>
+<div data-stick-sentinel></div>
+<nav class="nav" aria-label="Main"><div class="wrap nav__in">
+  <a class="nav__brand" href="../"><img src="../media/v2/logo.webp" alt="Deephold" height="30"></a>
+  <ul class="nav__list"><li><a class="nav__link" href="../"><img src="../media/icons/torch_pitch.webp" alt="" width="28" height="28"><span>Home</span></a></li><li><a class="nav__link" href="../play/"><img src="../media/icons/tool_pickaxe_bronze.webp" alt="" width="28" height="28"><span>Play</span></a></li><li><a class="nav__link" href="../news/"><img src="../media/icons/rune_mind.webp" alt="" width="28" height="28"><span>News</span></a></li><li><a class="nav__link" href="../market/"><img src="../media/icons/coin_ancient.webp" alt="" width="28" height="28"><span>Market</span></a></li><li><a class="nav__link" href="../hiscores/"><img src="../media/icons/ring_starmetal.webp" alt="" width="28" height="28"><span>Hiscores</span></a></li><li><a class="nav__link" href="../community/"><img src="../media/icons/barrel_oak.webp" alt="" width="28" height="28"><span>Community</span></a></li><li><a class="nav__link" href="../friends/"><img src="../media/icons/rope_coil.webp" alt="" width="28" height="28"><span>Friends</span></a></li><li><a class="nav__link" href="../profile/"><img src="../media/icons/armor_helmet_rune.webp" alt="" width="28" height="28"><span>Profile</span></a></li></ul>
+  <div class="nav__cta"><a class="btn btn--gold btn--sm" href="https://web-production-811eb.up.railway.app" data-play><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg><span>Play now</span></a></div>
+</div></nav>
+<main id="main" class="page">
+<div class="wrap stack">
+  <div class="page-title"><div><h1>Portal style guide</h1><p>Tokens from the brandbook. Stone, bronze, leather, parchment.</p></div></div>
+  <section class="panel"><div class="panel__head"><h2>Colour</h2></div><div class="panel__body"><div class="sg-swatches"><div class="sg-sw"><i style="background:#0B0A08"></i><span>--void #0B0A08</span></div><div class="sg-sw"><i style="background:#1D1915"></i><span>--surface #1D1915</span></div><div class="sg-sw"><i style="background:#282219"></i><span>--raised #282219</span></div><div class="sg-sw"><i style="background:#3D3427"></i><span>--border #3D3427</span></div><div class="sg-sw"><i style="background:#ECDFC3"></i><span>--text-hi #ECDFC3</span></div><div class="sg-sw"><i style="background:#C7B295"></i><span>--text #C7B295</span></div><div class="sg-sw"><i style="background:#E8B54A"></i><span>--gold #E8B54A</span></div><div class="sg-sw"><i style="background:#FFD778"></i><span>--gold-bright #FFD778</span></div><div class="sg-sw"><i style="background:#B0763B"></i><span>--bronze #B0763B</span></div><div class="sg-sw"><i style="background:#7A8F3C"></i><span>--moss #7A8F3C</span></div><div class="sg-sw"><i style="background:#5BC8D6"></i><span>--crystal #5BC8D6</span></div><div class="sg-sw"><i style="background:#B3322E"></i><span>--gem-red #B3322E</span></div><div class="sg-sw"><i style="background:#63B84F"></i><span>--r-uncommon #63B84F</span></div><div class="sg-sw"><i style="background:#4E86D9"></i><span>--r-rare #4E86D9</span></div><div class="sg-sw"><i style="background:#A45BD6"></i><span>--r-epic #A45BD6</span></div><div class="sg-sw"><i style="background:#E8930C"></i><span>--r-legendary #E8930C</span></div></div></div></section>
+  <section class="panel"><div class="panel__head"><h2>Type</h2></div><div class="panel__body">
+    <h1 class="wordmark" style="font-size:48px">Deephold 48 wordmark</h1><h2 style="font-size:32px;color:var(--gold)">Pixelify Sans 32 section</h2><h3 style="font-size:24px">Pixelify Sans 24 panel</h3>
+    <p class="lede">Golos Text 18 lede. Stubborn, deadpan, never exclaims.</p><p>Golos Text 16 body copy for everything that needs reading.</p><p class="num" style="font-size:24px;color:var(--gold-bright)">1,234,567 · Pixel Operator Mono</p></div></section>
+  <section class="panel"><div class="panel__head"><h2>Buttons and badges</h2></div><div class="panel__body stack">
+    <div class="sg-row"><a class="btn btn--gold btn--lg" href="https://web-production-811eb.up.railway.app" data-play><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>Play free</a><a class="btn btn--steam" href="#steam" data-steam><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.35 2.21a2.83 2.83 0 0 1 1.6-.49h.15l2.38-3.45v-.05a3.77 3.77 0 1 1 3.77 3.77h-.09l-3.4 2.42v.13a2.83 2.83 0 0 1-5.62.47L2.4 14.5A10 10 0 1 0 12 2Zm-4.73 15.17-1.22-.5a2.12 2.12 0 1 0 1.16-2.9l1.27.52a1.56 1.56 0 1 1-1.2 2.88Zm9.32-7.73a2.51 2.51 0 1 0-2.51 2.51 2.52 2.52 0 0 0 2.51-2.51Zm-4.39 0a1.89 1.89 0 1 1 1.88 1.88 1.89 1.89 0 0 1-1.88-1.88Z"/></svg>Steam waitlist</a><button class="btn" type="button">Stone</button><button class="btn btn--ghost" type="button">Ghost</button><button class="btn btn--sm" type="button">Small</button><a class="link-more" href="#">Link more</a></div>
+    <div class="sg-row"><span class="badge badge--live">Live</span><span class="badge badge--preview">Preview</span><span class="badge badge--soon">Soon</span><span class="badge badge--ember">Season event</span><span class="badge">Neutral</span></div>
+    <div class="sg-row"><span class="slot slot--lg"><img src="../media/icons/tool_pickaxe_bronze.webp" alt="" width="64" height="64" loading="lazy"></span><span class="slot slot--lg"><img src="../media/icons/coin_ancient.webp" alt="" width="64" height="64" loading="lazy"><span class="slot__qty">250</span></span><span class="slot slot--lg"><img src="../media/icons/armor_shield_rune.webp" alt="" width="64" height="64" loading="lazy"></span><span class="slot slot--lg"><img src="../media/icons/potion_emberbrew.webp" alt="" width="64" height="64" loading="lazy"></span><span class="slot slot--lg"><img src="../media/icons/ring_starmetal.webp" alt="" width="64" height="64" loading="lazy"></span></div>
+  </div></section>
+  <section class="cta-tiles" aria-label="CTA tiles sample">
+    <a class="cta-tile cta-tile--play" href="https://web-production-811eb.up.railway.app" data-play><span class="cta-tile__icon"><img src="../media/icons/tool_pickaxe_rune.webp" alt="" width="64" height="64" loading="lazy"></span><span><span class="cta-tile__t">Play free</span><span class="cta-tile__s">Tile, play variant.</span></span></a>
+    <a class="cta-tile cta-tile--steam" href="#steam" data-steam><span class="cta-tile__icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.35 2.21a2.83 2.83 0 0 1 1.6-.49h.15l2.38-3.45v-.05a3.77 3.77 0 1 1 3.77 3.77h-.09l-3.4 2.42v.13a2.83 2.83 0 0 1-5.62.47L2.4 14.5A10 10 0 1 0 12 2Zm-4.73 15.17-1.22-.5a2.12 2.12 0 1 0 1.16-2.9l1.27.52a1.56 1.56 0 1 1-1.2 2.88Zm9.32-7.73a2.51 2.51 0 1 0-2.51 2.51 2.52 2.52 0 0 0 2.51-2.51Zm-4.39 0a1.89 1.89 0 1 1 1.88 1.88 1.89 1.89 0 0 1-1.88-1.88Z"/></svg></span><span><span class="cta-tile__t">Steam</span><span class="cta-tile__s">Tile, steam variant.</span></span></a>
+    <a class="cta-tile cta-tile--hold" href="#"><span class="cta-tile__icon"><img src="../media/icons/barrel_oak.webp" alt="" width="64" height="64" loading="lazy"></span><span><span class="cta-tile__t">The hold</span><span class="cta-tile__s">Tile, moss variant.</span></span></a>
+  </section>
+  <div class="dotabs" data-tabs><div class="tabs__list" role="tablist" aria-label="What you do"><button class="tab" type="button" role="tab" id="do-t-dig" aria-controls="do-p-dig" aria-selected="true"><img src="../media/icons/tool_pickaxe_bronze.webp" alt="" width="24" height="24">Dig</button><button class="tab" type="button" role="tab" id="do-t-forge" aria-controls="do-p-forge" aria-selected="false" tabindex="-1"><img src="../media/icons/tool_hammer_smith.webp" alt="" width="24" height="24">Forge</button><button class="tab" type="button" role="tab" id="do-t-fight" aria-controls="do-p-fight" aria-selected="false" tabindex="-1"><img src="../media/icons/weapon_sword_rune.webp" alt="" width="24" height="24">Fight</button><button class="tab" type="button" role="tab" id="do-t-trade" aria-controls="do-p-trade" aria-selected="false" tabindex="-1"><img src="../media/icons/coin_ancient.webp" alt="" width="24" height="24">Trade</button><button class="tab" type="button" role="tab" id="do-t-together" aria-controls="do-p-together" aria-selected="false" tabindex="-1"><img src="../media/icons/rope_coil.webp" alt="" width="24" height="24">Together</button><button class="tab" type="button" role="tab" id="do-t-away" aria-controls="do-p-away" aria-selected="false" tabindex="-1"><img src="../media/icons/torch_pitch.webp" alt="" width="24" height="24">Away</button></div><div class="tabs__panel" role="tabpanel" id="do-p-dig" aria-labelledby="do-t-dig" tabindex="0">
+    <div class="dotabs__media"><img src="../media/v2/shots/03_mining_3d.webp" alt="Dig in Deephold" loading="lazy"></div>
+    <div class="dotabs__body"><h3>Dig</h3><p>Pick a vein, queue the work, close the tab. 12 skills level up from the same rock you hit.</p><ul class="facts"><li><b>12</b><span>skills</span></li><li><b>7</b><span>zones to push into</span></li></ul>
+    <a class="link-more" href="https://web-production-811eb.up.railway.app" data-play>Try it now</a></div>
+  </div><div class="tabs__panel" role="tabpanel" id="do-p-forge" aria-labelledby="do-t-forge" tabindex="0" hidden>
+    <div class="dotabs__media"><video muted loop playsinline preload="none" poster="../media/shots/items.webp" data-autoplay aria-label="Forge in Deephold"><source src="../media/clips/items.webm" type="video/webm"></video></div>
+    <div class="dotabs__body"><h3>Forge</h3><p>Smelt bars, smith gear, cook what the deep gives you. Everything has a recipe and a use.</p><ul class="facts"><li><b>265</b><span>items</span></li><li><b>144</b><span>pieces of gear</span></li></ul>
+    <a class="link-more" href="https://web-production-811eb.up.railway.app" data-play>Try it now</a></div>
+  </div><div class="tabs__panel" role="tabpanel" id="do-p-fight" aria-labelledby="do-t-fight" tabindex="0" hidden>
+    <div class="dotabs__media"><video muted loop playsinline preload="none" poster="../media/shots/combat.webp" data-autoplay aria-label="Fight in Deephold"><source src="../media/clips/combat.webm" type="video/webm"></video></div>
+    <div class="dotabs__body"><h3>Fight</h3><p>Gear up, pick a zone, let the fight run. Deeper zones hit harder and drop better.</p><ul class="facts"><li><b>60</b><span>monsters</span></li><li><b>1</b><span>world boss each season</span></li></ul>
+    <a class="link-more" href="https://web-production-811eb.up.railway.app" data-play>Try it now</a></div>
+  </div><div class="tabs__panel" role="tabpanel" id="do-p-trade" aria-labelledby="do-t-trade" tabindex="0" hidden>
+    <div class="dotabs__media"><video muted loop playsinline preload="none" poster="../media/shots/trade.webp" data-autoplay aria-label="Trade in Deephold"><source src="../media/clips/trade.webm" type="video/webm"></video></div>
+    <div class="dotabs__body"><h3>Trade</h3><p>Players set the prices. List what you dug up, buy what you can’t be bothered to make.</p><ul class="facts"><li><b>5%</b><span>market tax</span></li><li><b>7d</b><span>order lifetime</span></li></ul>
+    <a class="link-more" href="https://web-production-811eb.up.railway.app" data-play>Try it now</a></div>
+  </div><div class="tabs__panel" role="tabpanel" id="do-p-together" aria-labelledby="do-t-together" tabindex="0" hidden>
+    <div class="dotabs__media"><video muted loop playsinline preload="none" poster="../media/shots/guild.webp" data-autoplay aria-label="Together in Deephold"><source src="../media/clips/guild.webm" type="video/webm"></video></div>
+    <div class="dotabs__body"><h3>Together</h3><p>Friends list, guilds, chat and a boss everyone fights at once. Digging alone is allowed. It is just slower.</p><ul class="facts"><li><b>Friends</b><span>see who is online</span></li><li><b>Guilds</b><span>dig under one banner</span></li></ul>
+    <a class="link-more" href="https://web-production-811eb.up.railway.app" data-play>Try it now</a></div>
+  </div><div class="tabs__panel" role="tabpanel" id="do-p-away" aria-labelledby="do-t-away" tabindex="0" hidden>
+    <div class="dotabs__media"><img src="../media/v2/shots/02_offline_haul_8h.webp" alt="Keep going while you’re away in Deephold" loading="lazy"></div>
+    <div class="dotabs__body"><h3>Keep going while you’re away</h3><p>Queue up to 30 actions, close the tab, come back to the haul. Up to 12 hours offline, 72 with Patron.</p><ul class="facts"><li><b>12h</b><span>offline progress</span></li><li><b>30</b><span>actions in queue</span></li></ul>
+    <a class="link-more" href="https://web-production-811eb.up.railway.app" data-play>Try it now</a></div>
+  </div></div>
+  <section class="scroll"><div class="scroll__paper"><h2 class="ornament">Parchment</h2><ul class="news"><li class="news__item">
+  <a class="news__thumb" href="../news/#v0-360-3" tabindex="-1" aria-hidden="true"><img src="../media/v2/shots/05_breach_world_boss-640.webp" alt="" width="640" height="360" loading="lazy"><span class="news__ver">v0.360.3</span></a>
+  <div><h3><a href="../news/#v0-360-3">Honest ledgers</a></h3>
+  <p class="news__meta"><b>Game update</b> | <time datetime="2026-09-26">26 September 2026</time></p>
+  <p>Collection, Bestiary and Achievements now count only what the Hold can give you today, so every total can be finished.</p>
+  <a href="../news/#v0-360-3">Read more</a>
+  </div></li></ul></div></section>
+  <section class="panel"><div class="panel__head"><h2>Form</h2></div><div class="panel__body"><form class="wl" data-wl novalidate>
+  <input type="hidden" name="source" value="styleguide">
+  <div class="wl__row"><label class="sr-only" for="wl-12">Email</label><input class="input" id="wl-12" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+  <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <button class="btn btn--gold" type="submit">Notify me</button></div>
+  <p class="wl__msg" role="status" aria-live="polite"></p>
+</form></div></section>
+</div>
+</main>
+<footer class="footer"><div class="wrap footer__in">
+  <div class="footer__brand"><img src="../media/v2/logo.webp" alt="Deephold"><p>An idle MMO about digging deep, forging gear and trading with real people. Runs in your browser. Keeps going while you're away.</p></div>
+  <div><h3>Game</h3><ul><li><a href="https://web-production-811eb.up.railway.app" data-play>Play in browser</a></li><li><a href="../news/">News</a></li><li><a href="../patch-notes/">Patch notes</a></li><li><a href="../guides/">Guides</a></li><li><a href="../market/">Market</a></li><li><a href="../hiscores/">Hiscores</a></li></ul></div>
+  <div><h3>Community</h3><ul><li><a href="../community/">The hold</a></li><li><a href="../friends/">Friends</a></li><li><a href="../community/#discord">Discord</a></li><li><a href="../press/">Press kit</a></li></ul></div>
+  <div><h3>Account</h3><ul><li><a href="../profile/">Profile</a></li><li><a href="https://web-production-811eb.up.railway.app" data-play>Log in</a></li><li><a href="../play/#steam" data-steam>Steam waitlist</a></li><li><a href="../legal/privacy/">Privacy</a></li><li><a href="../legal/terms/">Terms</a></li></ul></div>
+</div><div class="wrap footer__base"><span>© 2026 Deephold</span><span>Game data v0.360.3 · 2026-10-07</span></div></footer>
+<div class="modal" id="steam-modal" role="dialog" aria-modal="true" aria-labelledby="sm-t" hidden>
+  <div class="modal__box panel"><button class="modal__close" type="button" data-close aria-label="Close">×</button>
+  <div class="panel__head"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.35 2.21a2.83 2.83 0 0 1 1.6-.49h.15l2.38-3.45v-.05a3.77 3.77 0 1 1 3.77 3.77h-.09l-3.4 2.42v.13a2.83 2.83 0 0 1-5.62.47L2.4 14.5A10 10 0 1 0 12 2Zm-4.73 15.17-1.22-.5a2.12 2.12 0 1 0 1.16-2.9l1.27.52a1.56 1.56 0 1 1-1.2 2.88Zm9.32-7.73a2.51 2.51 0 1 0-2.51 2.51 2.52 2.52 0 0 0 2.51-2.51Zm-4.39 0a1.89 1.89 0 1 1 1.88 1.88 1.89 1.89 0 0 1-1.88-1.88Z"/></svg><h2 id="sm-t">Steam waitlist</h2></div>
+  <div class="panel__body"><p>The Steam page isn't up yet. Leave an email and get one message the day it opens. Nothing else.</p><form class="wl" data-wl novalidate>
+  <input type="hidden" name="source" value="steam">
+  <div class="wl__row"><label class="sr-only" for="wl-13">Email</label><input class="input" id="wl-13" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+  <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <button class="btn btn--gold" type="submit">Notify me</button></div>
+  <p class="wl__msg" role="status" aria-live="polite"></p>
+</form></div></div>
+</div>
+</body>
+</html>

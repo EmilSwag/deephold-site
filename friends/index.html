@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" data-play-url="https://web-production-811eb.up.railway.app" data-steam-url="" data-waitlist-url="" data-waitlist-mail="support@YOUR-DOMAIN" data-api-url="https://api-production-b342.up.railway.app" data-root="../">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Friends · Deephold</title>
+<meta name="description" content="Your Deephold friends list: who is online, what they are doing, and an invite link for new delvers.">
+<link rel="canonical" href="https://emilswag.github.io/deephold-site/friends/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deephold">
+<meta property="og:title" content="Friends · Deephold">
+<meta property="og:description" content="Your Deephold friends list: who is online, what they are doing, and an invite link for new delvers.">
+<meta property="og:image" content="https://emilswag.github.io/deephold-site/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0A08">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="../favicon-64.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preload" href="../fonts/pixelify-sans-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/golos-text-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../portal.css">
+<script defer src="../portal.js"></script>
+</head>
+<body data-page="friends">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap topbar__in">
+  <span class="status" data-status data-state="unknown"><i class="status__dot"></i><span data-status-text>World status</span></span>
+  <span class="topbar__sep topbar__hide-sm"></span>
+  <span class="topbar__hide-sm"><b>Season Ember 2026</b> · The Ember Sovereign is up</span>
+  <div class="topbar__acct"><a href="https://web-production-811eb.up.railway.app" data-play>Log in</a><span class="topbar__sep"></span><a href="https://web-production-811eb.up.railway.app" data-play>Create account</a></div>
+</div></div>
+<header class="banner banner--slim">
+  <img class="banner__bg" src="../media/v2/loops/crystal_hollow.webp" alt="">
+  <div class="banner__in"><img class="banner__hero banner__hero--l" src="../media/v2/skins/deep_chorus.webp" alt="" width="210" height="210"><img class="banner__hero banner__hero--r" src="../media/v2/skins/ember_council.webp" alt="" width="210" height="210">
+    <a class="banner__logo" href="../"><img src="../media/v2/logo.webp" alt="Deephold home"></a>
+  </div>
+</header>
+<div data-stick-sentinel></div>
+<nav class="nav" aria-label="Main"><div class="wrap nav__in">
+  <a class="nav__brand" href="../"><img src="../media/v2/logo.webp" alt="Deephold" height="30"></a>
+  <ul class="nav__list"><li><a class="nav__link" href="../"><img src="../media/icons/torch_pitch.webp" alt="" width="28" height="28"><span>Home</span></a></li><li><a class="nav__link" href="../play/"><img src="../media/icons/tool_pickaxe_bronze.webp" alt="" width="28" height="28"><span>Play</span></a></li><li><a class="nav__link" href="../news/"><img src="../media/icons/rune_mind.webp" alt="" width="28" height="28"><span>News</span></a></li><li><a class="nav__link" href="../market/"><img src="../media/icons/coin_ancient.webp" alt="" width="28" height="28"><span>Market</span></a></li><li><a class="nav__link" href="../hiscores/"><img src="../media/icons/ring_starmetal.webp" alt="" width="28" height="28"><span>Hiscores</span></a></li><li><a class="nav__link" href="../community/"><img src="../media/icons/barrel_oak.webp" alt="" width="28" height="28"><span>Community</span></a></li><li><a class="nav__link" href="../friends/" aria-current="page"><img src="../media/icons/rope_coil.webp" alt="" width="28" height="28"><span>Friends</span></a></li><li><a class="nav__link" href="../profile/"><img src="../media/icons/armor_helmet_rune.webp" alt="" width="28" height="28"><span>Profile</span></a></li></ul>
+  <div class="nav__cta"><a class="btn btn--gold btn--sm" href="https://web-production-811eb.up.railway.app" data-play><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg><span>Play now</span></a></div>
+</div></nav>
+<main id="main" class="page">
+<div class="wrap stack">
+  <section class="panel gate"><span class="slot slot--lg"><img src="../media/icons/rope_coil.webp" alt="" width="64" height="64" loading="lazy"></span><div><h2>Your friends list lives in the game</h2><p>Log in to see who is online and send requests. Below is a preview.</p></div><a class="btn btn--gold" href="https://web-production-811eb.up.railway.app" data-play>Log in</a></section>
+  <div class="two">
+    <section class="panel" aria-labelledby="fr-t"><div class="panel__head"><img src="../media/icons/rope_coil.webp" alt="" width="64" height="64" loading="lazy"><h2 id="fr-t">Friends</h2><span class="badge badge--preview">Preview</span></div><div data-fr-list></div><div class="panel__foot"><span class="dim" data-fr-count></span></div></section>
+    <div class="stack">
+      <section class="panel" aria-labelledby="fr-add"><div class="panel__head"><h2 id="fr-add">Add a friend</h2></div><div class="panel__body">
+        <form class="wl" data-fr-add novalidate><div class="wl__row"><label class="sr-only" for="fr-name">Adventurer name</label><input class="input" id="fr-name" name="name" placeholder="Adventurer name" autocomplete="off" required><button class="btn" type="submit">Send request</button></div><p class="wl__msg" role="status" aria-live="polite"></p></form>
+      </div></section>
+      <section class="panel" aria-labelledby="fr-inv"><div class="panel__head"><h2 id="fr-inv">Bring someone down</h2></div><div class="panel__body">
+        <p>Send this link. It opens the game in their browser. No download.</p>
+        <div class="wl__row"><label class="sr-only" for="fr-link">Invite link</label><input class="input" id="fr-link" readonly value="https://web-production-811eb.up.railway.app" data-copy-src><button class="btn btn--gold" type="button" data-copy>Copy link</button></div>
+      </div></section>
+      <section class="panel" aria-labelledby="fr-rq"><div class="panel__head"><h2 id="fr-rq">Requests</h2></div><div data-fr-req></div></section>
+    </div>
+  </div>
+</div>
+</main>
+<footer class="footer"><div class="wrap footer__in">
+  <div class="footer__brand"><img src="../media/v2/logo.webp" alt="Deephold"><p>An idle MMO about digging deep, forging gear and trading with real people. Runs in your browser. Keeps going while you're away.</p></div>
+  <div><h3>Game</h3><ul><li><a href="https://web-production-811eb.up.railway.app" data-play>Play in browser</a></li><li><a href="../news/">News</a></li><li><a href="../patch-notes/">Patch notes</a></li><li><a href="../guides/">Guides</a></li><li><a href="../market/">Market</a></li><li><a href="../hiscores/">Hiscores</a></li></ul></div>
+  <div><h3>Community</h3><ul><li><a href="../community/">The hold</a></li><li><a href="../friends/">Friends</a></li><li><a href="../community/#discord">Discord</a></li><li><a href="../press/">Press kit</a></li></ul></div>
+  <div><h3>Account</h3><ul><li><a href="../profile/">Profile</a></li><li><a href="https://web-production-811eb.up.railway.app" data-play>Log in</a></li><li><a href="../play/#steam" data-steam>Steam waitlist</a></li><li><a href="../legal/privacy/">Privacy</a></li><li><a href="../legal/terms/">Terms</a></li></ul></div>
+</div><div class="wrap footer__base"><span>© 2026 Deephold</span><span>Game data v0.360.3 · 2026-10-07</span></div></footer>
+<div class="modal" id="steam-modal" role="dialog" aria-modal="true" aria-labelledby="sm-t" hidden>
+  <div class="modal__box panel"><button class="modal__close" type="button" data-close aria-label="Close">×</button>
+  <div class="panel__head"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.35 2.21a2.83 2.83 0 0 1 1.6-.49h.15l2.38-3.45v-.05a3.77 3.77 0 1 1 3.77 3.77h-.09l-3.4 2.42v.13a2.83 2.83 0 0 1-5.62.47L2.4 14.5A10 10 0 1 0 12 2Zm-4.73 15.17-1.22-.5a2.12 2.12 0 1 0 1.16-2.9l1.27.52a1.56 1.56 0 1 1-1.2 2.88Zm9.32-7.73a2.51 2.51 0 1 0-2.51 2.51 2.52 2.52 0 0 0 2.51-2.51Zm-4.39 0a1.89 1.89 0 1 1 1.88 1.88 1.89 1.89 0 0 1-1.88-1.88Z"/></svg><h2 id="sm-t">Steam waitlist</h2></div>
+  <div class="panel__body"><p>The Steam page isn't up yet. Leave an email and get one message the day it opens. Nothing else.</p><form class="wl" data-wl novalidate>
+  <input type="hidden" name="source" value="steam">
+  <div class="wl__row"><label class="sr-only" for="wl-9">Email</label><input class="input" id="wl-9" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+  <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <button class="btn btn--gold" type="submit">Notify me</button></div>
+  <p class="wl__msg" role="status" aria-live="polite"></p>
+</form></div></div>
+</div>
+</body>
+</html>
