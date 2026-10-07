@@ -249,7 +249,7 @@
     $$('[data-ticker]').forEach((el) => {
       const pickT = items.filter((i) => i.i).sort((a, b) => Math.abs(b.d) - Math.abs(a.d)).slice(0, 22);
       const row = pickT.map((it) => `<span class="ticker__it">${itemIcon(it)}<span>${esc(it.n)}</span>${value(it.v)}${delta(it.d)}</span>`).join('');
-      el.innerHTML = `<span class="ticker__tag">Preview prices</span><div class="ticker__track">${row}${row}</div>`;
+      el.innerHTML = `<span class="ticker__tag">Preview<span class="ticker__tag-x"> prices</span></span><div class="ticker__track">${row}${row}</div>`;
     });
 
     // home mini table
