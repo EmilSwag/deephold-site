@@ -500,6 +500,107 @@ a.panel:hover { transform: translateY(-2px); filter: brightness(1.08); color: va
 .perks td.num { font-size: 18px; color: var(--text-hi); }
 .perks td.num.gold { color: var(--gold-bright); }
 
+/* ── v5 polish: chunkier OSRS materials, fewer SaaS habits ────────────────── */
+/* buttons: thick bevel like the in-game stone buttons; gold = the one thing to press */
+.btn { box-shadow: inset 2px 2px 0 rgba(255, 236, 190, .22), inset -2px -2px 0 rgba(0, 0, 0, .45), 0 3px 0 #000; }
+.btn:active { box-shadow: inset 2px 2px 0 rgba(0, 0, 0, .5), 0 0 0 #000; }
+.btn--gold { box-shadow: inset 2px 2px 0 rgba(255, 248, 220, .7), inset -2px -2px 0 rgba(122, 78, 36, .8), 0 3px 0 #000, 0 0 28px rgba(232, 181, 74, .22); }
+.btn--steam, .btn--stone { --b1: #4b3f2e; --b2: #2a231a; }
+.btn--xl { overflow: hidden; min-height: 76px; padding: 12px 30px 12px 24px; gap: 14px; font-size: 32px; }
+.btn--xl svg { width: 34px; height: 34px; }
+.btn--xl > span { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; line-height: 1; }
+.btn--xl small { font: 600 13px/1 var(--f-body); letter-spacing: .02em; color: #5A3410; text-shadow: none; }
+.btn--xl::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 240, .5) 50%, transparent 60%) -150% 0 / 200% 100% no-repeat; animation: glint 5s ease-in-out 1.5s infinite; }
+@keyframes glint { 0%, 70% { background-position: -150% 0; } 100% { background-position: 250% 0; } }
+.banner__cta { align-items: center; }
+
+/* status: the browser build is live even when the API can't be reached from here */
+.status[data-state="unknown"] .status__dot { background: var(--moss); }
+
+/* badges: in-game text tags, not outlined pills */
+.badge { padding: 0; border: 0; background: none; font: 400 13px/1.2 var(--f-display); letter-spacing: .06em; text-transform: uppercase; text-shadow: 1px 1px 0 #000; }
+.badge::before { content: ""; width: 6px; height: 6px; background: currentColor; box-shadow: 1px 1px 0 #000; }
+.badge--ember { background: none; }
+
+/* stones: three square stone buttons under the banner (OSRS home row) */
+.stones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.stone { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 150px; padding: 18px 12px 16px;
+  text-align: center; text-decoration: none; color: var(--text);
+  background: var(--grain), linear-gradient(#4a3f30, #2b241b 60%, #221c15); border: 2px solid #000;
+  box-shadow: inset 3px 3px 0 rgba(255, 236, 190, .14), inset -3px -3px 0 rgba(0, 0, 0, .5), 0 4px 0 #000;
+  transition: transform .12s var(--ease), filter .12s; }
+.stone::before { content: ""; position: absolute; inset: 6px; border: 1px solid rgba(0, 0, 0, .6); box-shadow: inset 1px 1px 0 rgba(255, 236, 190, .06); pointer-events: none; }
+.stone img { width: 64px; height: 64px; object-fit: contain; filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .7)); transition: transform .25s var(--ease); }
+.stone__t { font: 400 24px/1 var(--f-display); color: var(--gold); text-shadow: 2px 2px 0 #000; }
+.stone__s { font-size: 13px; line-height: 1.35; color: var(--text-dim); }
+.stone:hover { color: var(--text); filter: brightness(1.12); transform: translateY(-2px); }
+.stone:hover img { transform: translateY(-3px) rotate(-6deg) scale(1.06); }
+.stone:hover .stone__t { color: var(--gold-bright); }
+.stone:active { transform: translateY(2px); box-shadow: inset 3px 3px 0 rgba(0, 0, 0, .5), 0 1px 0 #000; }
+
+/* side CTA: follows you down the page, so the left column never goes empty */
+.side { align-self: stretch; display: flex; flex-direction: column; }
+.side > * { flex: none; }
+.sidecta { position: sticky; top: calc(var(--nav-h) + 16px); }
+.sidecta .panel__body { display: grid; gap: 12px; }
+.sidecta__or { display: flex; align-items: center; gap: 10px; margin: 2px 0 0; font: 400 16px/1 var(--f-display); color: var(--text-dim); }
+.sidecta__or::before, .sidecta__or::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.sidecta .wl__row .btn { flex: 1 1 100%; }
+.sidecta .wl .btn--gold { --b1: #4b3f2e; --b2: #2a231a; color: var(--gold); text-shadow: 1px 1px 0 #000;
+  box-shadow: inset 2px 2px 0 rgba(255, 236, 190, .22), inset -2px -2px 0 rgba(0, 0, 0, .45), 0 3px 0 #000; }
+
+/* dialogue: OSRS chatbox CTA with a chathead and numbered options */
+.chat { position: relative; display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 22px; align-items: center; margin: 5px; padding: 20px 24px;
+  color: var(--ink); background-color: #CDBB8E; background-image: var(--fibers), linear-gradient(#DCCB9E, #C2AC7A);
+  border: 3px solid #000; box-shadow: 0 0 0 3px #4a3f30, 0 0 0 5px #000, inset 0 0 36px rgba(90, 60, 20, .35), 0 9px 0 5px rgba(0, 0, 0, .35); }
+.chat__head { width: 132px; height: 132px; border: 2px solid #000; box-shadow: 0 0 0 2px #7A5A30, inset 0 0 18px rgba(0, 0, 0, .6); background: #2a1a0a; overflow: hidden; }
+.chat__head img { width: 100%; height: 100%; object-fit: cover; }
+.chat__name { margin: 0 0 6px; font: 400 24px/1 var(--f-display); color: #800000; }
+.chat__line { margin: 0 0 16px; font: 500 18px/1.45 var(--f-body); color: #1D1208; }
+.chat__prompt { margin: 0 0 4px; font: 400 16px/1 var(--f-display); color: #800000; text-align: center; }
+.chat__opts { display: grid; justify-items: center; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.chat__opts a { display: inline-flex; align-items: baseline; gap: 10px; padding: 6px 14px; font: 400 24px/1.1 var(--f-display); color: #000; text-decoration: none; transition: color .1s; }
+.chat__opts kbd { font: 700 16px/1 var(--f-num); color: #7A5A30; }
+.chat__opts a:hover, .chat__opts a:focus-visible { color: #fff; text-shadow: 1px 1px 0 #000; }
+.chat__opts a:hover kbd, .chat__opts a:focus-visible kbd { color: var(--gold-bright); }
+.chat__hint { margin: 10px 0 0; font-size: 12px; color: #6A4A22; text-align: center; }
+@media (hover: none) { .chat__hint { display: none; } }
+
+/* facts: inventory-brown slots with yellow stack numbers */
+.facts li { background: #3E3529; border: 1px solid #000; box-shadow: inset 1px 1px 0 rgba(255, 236, 190, .08), inset -1px -1px 0 rgba(0, 0, 0, .5); }
+.facts b { color: var(--xp); text-shadow: 1px 1px 0 #000; }
+.facts span { color: var(--text); }
+
+/* footer: centred stone strip with piped links, like the OSRS site */
+.footer { margin-top: 32px; background: #0B0A08 var(--grain); border-top: 3px solid #000; box-shadow: inset 0 1px 0 var(--border-strong); }
+.footer__in { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 36px 16px 30px; text-align: center; }
+.footer__logo img { width: 180px; height: auto; filter: drop-shadow(0 4px 0 #000); }
+.footer__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; font: 400 16px/1.3 var(--f-display); }
+.footer__links a { padding: 0 12px; color: var(--gold); text-decoration: none; }
+.footer__links a + a { border-left: 1px solid var(--border-strong); }
+.footer__links a:hover { color: var(--gold-bright); text-decoration: underline; }
+.footer__tag { max-width: 60ch; margin: 0; color: var(--text-dim); }
+.footer__legal { margin: 0; font-size: 12px; color: var(--text-faint); }
+.footer__legal a { color: var(--text-dim); }
+
+@media (max-width: 1100px) {
+  .sidecta { position: static; grid-column: 1 / -1; }
+}
+@media (max-width: 860px) {
+  .stones { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .stone { min-height: 120px; padding: 14px 6px 12px; }
+  .stone img { width: 48px; height: 48px; }
+  .stone__t { font-size: 16px; }
+  .stone__s { display: none; }
+}
+@media (max-width: 560px) {
+  .btn--xl { min-height: 64px; font-size: 24px; padding: 10px 18px; }
+  .btn--xl svg { width: 28px; height: 28px; }
+  .chat { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; padding: 18px 14px; }
+  .chat__head { width: 96px; height: 96px; }
+  .chat__opts a { font-size: 20px; padding: 6px 8px; }
+}
+
 /* ── style guide page helpers ─────────────────────────────────────────────── */
 .sg-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
 .sg-sw { border: 1px solid #000; }

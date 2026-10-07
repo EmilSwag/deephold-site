@@ -485,3 +485,18 @@
     });
   }
 })();
+
+/* OSRS dialogue CTA: press 1/2/3 to pick an option while the box is on screen */
+(() => {
+  const box = document.querySelector('[data-dialogue]');
+  if (!box || !('IntersectionObserver' in window)) return;
+  let seen = false;
+  new IntersectionObserver(([e]) => { seen = e.isIntersecting; }, { threshold: 0.4 }).observe(box);
+  document.addEventListener('keydown', (e) => {
+    if (!seen || e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+    const t = e.target;
+    if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return;
+    const a = box.querySelector(`[data-key="${e.key}"]`);
+    if (a) { e.preventDefault(); a.click(); }
+  });
+})();
