@@ -20,6 +20,7 @@
 <link rel="preload" href="../fonts/pixelify-sans-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/golos-text-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../portal.css">
+<script>document.documentElement.classList.add('js')</script>
 <script defer src="../portal.js"></script>
 </head>
 <body data-page="friends">
@@ -44,23 +45,23 @@
 </div></nav>
 <main id="main" class="page">
 <div class="wrap stack">
-  <section class="panel gate"><span class="slot slot--lg"><img src="../media/icons/rope_coil.webp" alt="" width="64" height="64" loading="lazy"></span><div><h2>Your friends list lives in the game</h2><p>Log in to see who is online and send requests. Below is a preview.</p></div><a class="btn btn--gold" href="https://web-production-811eb.up.railway.app" data-play>Log in</a></section>
+  <section class="rv panel gate"><span class="slot slot--lg"><img src="../media/icons/rope_coil.webp" alt="" width="64" height="64" loading="lazy"></span><div><h2>Your friends list lives in the game</h2><p>Log in to see who is online and send requests. Below is a preview.</p></div><a class="btn btn--gold" href="https://web-production-811eb.up.railway.app" data-play>Log in</a></section>
   <div class="two">
-    <section class="panel" aria-labelledby="fr-t"><div class="panel__head"><img src="../media/icons/rope_coil.webp" alt="" width="64" height="64" loading="lazy"><h2 id="fr-t">Friends</h2><span class="badge badge--preview">Preview</span></div><div data-fr-list></div><div class="panel__foot"><span class="dim" data-fr-count></span></div></section>
+    <section class="rv panel" aria-labelledby="fr-t"><div class="panel__head"><img src="../media/icons/rope_coil.webp" alt="" width="64" height="64" loading="lazy"><h2 id="fr-t">Friends</h2><span class="badge badge--preview">Preview</span></div><div data-fr-list></div><div class="panel__foot"><span class="dim" data-fr-count></span></div></section>
     <div class="stack">
-      <section class="panel" aria-labelledby="fr-add"><div class="panel__head"><h2 id="fr-add">Add a friend</h2></div><div class="panel__body">
+      <section class="rv panel" aria-labelledby="fr-add"><div class="panel__head"><h2 id="fr-add">Add a friend</h2></div><div class="panel__body">
         <form class="wl" data-fr-add novalidate><div class="wl__row"><label class="sr-only" for="fr-name">Adventurer name</label><input class="input" id="fr-name" name="name" placeholder="Adventurer name" autocomplete="off" required><button class="btn" type="submit">Send request</button></div><p class="wl__msg" role="status" aria-live="polite"></p></form>
       </div></section>
-      <section class="panel" aria-labelledby="fr-inv"><div class="panel__head"><h2 id="fr-inv">Bring someone down</h2></div><div class="panel__body">
+      <section class="rv panel" aria-labelledby="fr-inv"><div class="panel__head"><h2 id="fr-inv">Bring someone down</h2></div><div class="panel__body">
         <p>Send this link. It opens the game in their browser. No download.</p>
         <div class="wl__row"><label class="sr-only" for="fr-link">Invite link</label><input class="input" id="fr-link" readonly value="https://web-production-811eb.up.railway.app" data-copy-src><button class="btn btn--gold" type="button" data-copy>Copy link</button></div>
       </div></section>
-      <section class="panel" aria-labelledby="fr-rq"><div class="panel__head"><h2 id="fr-rq">Requests</h2></div><div data-fr-req></div></section>
+      <section class="rv panel" aria-labelledby="fr-rq"><div class="panel__head"><h2 id="fr-rq">Requests</h2></div><div data-fr-req></div></section>
     </div>
   </div>
 </div>
 </main>
-<footer class="footer"><div class="wrap footer__in">
+<footer class="rv footer"><div class="wrap footer__in">
   <a class="footer__logo" href="../"><img src="../media/v2/logo.webp" alt="Deephold home" width="180"></a>
   <nav class="footer__links" aria-label="Footer"><a href="https://web-production-811eb.up.railway.app" data-play>Play</a><a href="../news/">News</a><a href="../patch-notes/">Patch notes</a><a href="../guides/">Guides</a><a href="../market/">Market</a><a href="../hiscores/">Hiscores</a><a href="../community/">The hold</a><a href="../community/#discord">Discord</a><a href="../friends/">Friends</a><a href="../profile/">Profile</a><a href="../play/#steam" data-steam>Steam waitlist</a><a href="../press/">Press kit</a></nav>
   <p class="footer__tag">An idle MMO about digging deep, forging gear and trading with real people. Runs in your browser. Keeps going while you're away.</p>

@@ -92,6 +92,8 @@
       if (focus) tab.focus();
       box.dispatchEvent(new CustomEvent('tabchange', { detail: tab.id }));
     };
+    box._tabs = tabs;
+    box._select = select; // used by the auto-advance in the motion module
     tabs.forEach((t, i) => {
       t.addEventListener('click', () => select(t, false));
       t.addEventListener('keydown', (e) => {
@@ -120,17 +122,28 @@
   $$('[data-countdown]').forEach((el) => {
     const end = Number(el.dataset.countdown);
     if (!end) return;
+    // four cells built once; afterwards only the number that changed is touched, and it ticks
+    el.innerHTML = ['days', 'hrs', 'min', 'sec'].map((l) => `<span><b>--</b><small>${l}</small></span>`).join('');
+    const cells = $$('span > b', el);
     const tick = () => {
       let s = Math.max(0, Math.floor((end - Date.now()) / 1000));
-      if (!s) { el.innerHTML = '<span>Season ended</span>'; return; }
+      if (!s) { el.innerHTML = '<span>Season ended</span>'; clearInterval(timer); return; }
       const d = Math.floor(s / 86400); s -= d * 86400;
       const h = Math.floor(s / 3600); s -= h * 3600;
       const m = Math.floor(s / 60); s -= m * 60;
-      const cell = (v, l) => `<span>${String(v).padStart(2, '0')}<small>${l}</small></span>`;
-      el.innerHTML = cell(d, 'days') + cell(h, 'hrs') + cell(m, 'min') + cell(s, 'sec');
+      [d, h, m, s].forEach((v, i) => {
+        const txt = String(v).padStart(2, '0');
+        const b = cells[i];
+        if (b.textContent === txt) return;
+        b.textContent = txt;
+        const cell = b.parentElement;
+        cell.classList.remove('tick');
+        void cell.offsetWidth; // restart the tick animation
+        cell.classList.add('tick');
+      });
     };
     tick();
-    setInterval(tick, 1000);
+    const timer = setInterval(tick, 1000);
   });
 
   // ── copy buttons ────────────────────────────────────────────────────────
@@ -345,7 +358,21 @@
   }
 
   // ── adventurers (preview generator) ─────────────────────────────────────
-  const SKINS = ['forgeborn', 'runeward_sentinel', 'starmetal_delver', 'cinderplate', 'ledgerbound', 'deep_chorus', 'mawwarden', 'riftveil', 'ember_council', 'delvers_compact', 'ancestral'];
+  // No skins anywhere (08.10): an adventurer looks like what they really wear. The portrait is
+  // the worn helmet; the equipment grid below it is the rest of the kit.
+  const GEAR_SLOTS = ['tool_pickaxe', 'head', 'tool_axe', 'weapon', 'body', 'offhand', 'ring', 'legs', 'tool_rod', '', 'boots', ''];
+  const gearOf = (G, name, total) => {
+    const r = rng(hash(`gear:${name}`));
+    const bySlot = {};
+    G.items.filter((i) => i.s && i.i).forEach((i) => { (bySlot[i.s] = bySlot[i.s] || []).push(i); });
+    const cap = Math.max(1, Math.round((total / (G.skills.length * 92)) * 10));
+    const gear = {};
+    GEAR_SLOTS.filter(Boolean).forEach((slot) => {
+      const list = (bySlot[slot] || []).filter((i) => (i.t || 1) <= cap).sort((a, b) => (b.t || 0) - (a.t || 0));
+      gear[slot] = list.length ? list[Math.floor(r() * Math.min(3, list.length))] : null;
+    });
+    return gear;
+  };
   const A = ['Bran', 'Thor', 'Dur', 'Gim', 'Kaz', 'Bal', 'Nor', 'Ori', 'Mor', 'Grun', 'Hald', 'Brok', 'Ulf', 'Skar', 'Vond', 'Ash', 'Ember', 'Iron', 'Coal', 'Flint', 'Rune', 'Deep', 'Stone', 'Copper', 'Mith', 'Grim', 'Dval', 'Kel'];
   const B = ['nok', 'rin', 'dain', 'grim', 'mund', 'vik', 'gar', 'rik', 'helm', 'bard', 'dor', 'ak', 'dred', 'fist', 'beard', 'delve', 'vein', 'forge', 'hammer', 'tooth', 'mole', 'pick'];
   const GUILDS = ['Ironvein', 'The Deep Ledger', 'Ashforge', 'Stonecount', 'Cinder Rats', 'Hollow Crown', 'Mole Union'];
@@ -364,9 +391,10 @@
       const lvl = Math.max(1, Math.min(92, Math.round(strength * (0.55 + r() * 0.45) * 92 + (r() - 0.5) * 6)));
       return { ...s, lvl, xp: xpFor(lvl) + Math.floor(r() * (xpFor(lvl + 1) - xpFor(lvl))) };
     });
+    const total = skills.reduce((t, s) => t + s.lvl, 0);
     return {
       name,
-      skin: SKINS[hash(name) % SKINS.length],
+      gear: gearOf(G, name, total),
       guild: r() < 0.75 ? pick(r, GUILDS) : '',
       patron: r() < 0.35,
       skills,
@@ -382,7 +410,11 @@
     const used = new Set();
     return Array.from({ length: 60 }, (_, i) => person(G, makeName(r, used), 0.98 - i * 0.011 - r() * 0.02));
   };
-  const portrait = (p, cls = 'portrait--sm', presence = '') => `<span class="portrait ${cls}"><img src="${R}media/v2/portraits/${p.skin}.webp" alt="" width="64" height="64" loading="lazy">${presence ? `<i class="presence presence--${presence}"></i>` : ''}</span>`;
+  // portrait = the helmet really worn (or a bare head: an empty slot), never a skin
+  const portrait = (p, cls = 'portrait--sm', presence = '') => {
+    const head = p.gear && p.gear.head;
+    return `<span class="portrait ${cls}${head ? '' : ' portrait--bare'}" title="${head ? esc(head.n) : 'No helmet'}">${head ? itemIcon(head) : ''}${presence ? `<i class="presence presence--${presence}"></i>` : ''}</span>`;
+  };
   const profileHref = (p) => `${R}profile/?name=${encodeURIComponent(p.name)}`;
 
   // ── hiscores ────────────────────────────────────────────────────────────
@@ -436,19 +468,12 @@
       return `<div class="skill" title="${esc(s.name)}: ${fmt(s.xp)} XP">${skillIcon(s)}<span style="flex:1;min-width:0"><span class="skill__n">${esc(s.name)}</span><span class="xpbar"><i style="width:${Math.round(into * 100)}%"></i></span></span><span class="skill__lv">${s.lvl}</span></div>`;
     }).join('') + `<div class="skill skill--total">Total level <span class="skill__lv" style="margin-left:8px">${fmt(p.total)}</span></div>`;
 
-    // gear: best item per slot the adventurer could plausibly wear
-    const r = rng(hash(`gear:${p.name}`));
-    const bySlot = {};
-    G.items.filter((i) => i.s && i.i).forEach((i) => { (bySlot[i.s] = bySlot[i.s] || []).push(i); });
+    // gear: the kit the adventurer really wears (same data the portrait uses)
+    const r = rng(hash(`feed:${p.name}`));
     const cap = Math.max(1, Math.round((p.total / (G.skills.length * 92)) * 10));
-    const gearFor = (slot) => {
-      const list = (bySlot[slot] || []).filter((i) => (i.t || 1) <= cap).sort((a, b) => (b.t || 0) - (a.t || 0));
-      return list.length ? list[Math.floor(r() * Math.min(3, list.length))] : null;
-    };
-    const LAYOUT = ['tool_pickaxe', 'head', 'tool_axe', 'weapon', 'body', 'offhand', 'ring', 'legs', 'tool_rod', '', 'boots', ''];
-    $('[data-pf-gear]').innerHTML = LAYOUT.map((slot) => {
+    $('[data-pf-gear]').innerHTML = GEAR_SLOTS.map((slot) => {
       if (!slot) return '<span></span>';
-      const it = gearFor(slot);
+      const it = p.gear[slot];
       return it ? `<span class="slot" title="${esc(it.n)}">${itemIcon(it)}</span>` : `<span class="slot slot--empty" title="${esc(slot)}"></span>`;
     }).join('');
 
@@ -467,9 +492,6 @@
     ].filter(Boolean);
     $('[data-pf-feed]').innerHTML = feed.map((f) => `<li><span class="slot">${f.ic}</span><span>${f.t}</span><time>${f.ago} ago</time></li>`).join('');
 
-    // skins
-    const owned = new Set(SKINS.filter((s, i) => s === p.skin || rng(hash(`${p.name}:${s}`))() < 0.3 + (i % 3) * 0.1));
-    $('[data-pf-skins]').innerHTML = SKINS.map((s) => `<span class="slot slot--lg" title="${esc(s.replace(/_/g, ' '))}${owned.has(s) ? '' : ' (locked)'}" style="${owned.has(s) ? '' : 'opacity:.3;filter:grayscale(1)'}"><img src="${R}media/v2/portraits/${s}.webp" alt="" width="64" height="64" loading="lazy"></span>`).join('');
   }
 
   // ── friends ─────────────────────────────────────────────────────────────
@@ -511,4 +533,183 @@
     const a = box.querySelector(`[data-key="${e.key}"]`);
     if (a) { e.preventDefault(); a.click(); }
   });
+})();
+
+/* Motion (v5): scroll reveals + staggers, lazy-image fade, banner parallax, tab auto-advance,
+   count-ups, the Foreman's typewriter. Reveal gating lives on html.js (inline in <head>); if the
+   observer API is missing the class is dropped and everything simply shows. */
+(() => {
+  const doc = document.documentElement;
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!('IntersectionObserver' in window)) { doc.classList.remove('js'); return; }
+
+  // ── reveals: blocks (.rv) + staggered lists (.rv-kids) ───────────────────
+  const KIDS = '.stones, .news, .facts, .sidebox ul, .footer__links, .ledger tbody, .mk-top, .chips, .hs__skills, [data-fr-list], [data-fr-req], [data-pf-skills], [data-pf-feed], .profile-stats, .gex__slots, .worlds__tbl tbody, .plats, .cgrid, .faq';
+  const seen = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    seen.unobserve(e.target);
+  }), { rootMargin: '0px 0px -6% 0px', threshold: 0.04 });
+  // The parchment (.scroll) is clip-path'd shut until it reveals, and Chrome counts clip-path in
+  // the intersection (so an observer never sees it, nor the lists inside). Those few blocks are
+  // checked by hand on scroll instead, and their lists are released together with them.
+  const clipped = new Set();
+  let clipRaf = 0;
+  const checkClipped = () => {
+    clipRaf = 0;
+    for (const el of clipped) {
+      const r = el.getBoundingClientRect();
+      if (r.top > innerHeight * 0.94 || r.bottom < 0) continue;
+      clipped.delete(el);
+      el.classList.add('in');
+      $$('.rv-kids', el).forEach((k) => { k.classList.add('in'); seen.unobserve(k); });
+    }
+    if (!clipped.size) removeEventListener('scroll', onScroll);
+  };
+  const onScroll = () => { if (!clipRaf) clipRaf = requestAnimationFrame(checkClipped); };
+  const stagger = (el) => [...el.children].forEach((c, i) => c.style.setProperty('--i', String(Math.min(i, 10))));
+  const tag = (root) => {
+    $$('.rv', root).forEach((el) => {
+      if (el.dataset.rv) return;
+      el.dataset.rv = '1';
+      if (!el.classList.contains('scroll')) { seen.observe(el); return; }
+      if (!clipped.size) addEventListener('scroll', onScroll, { passive: true });
+      clipped.add(el);
+      onScroll();
+    });
+    $$(KIDS, root).forEach((el) => {
+      if (!el.children.length) return;
+      if (el.dataset.rvk) { if (el.dataset.rvk !== String(el.children.length)) { stagger(el); el.dataset.rvk = String(el.children.length); } return; }
+      el.dataset.rvk = String(el.children.length);
+      stagger(el);
+      el.classList.add('rv-kids');
+      seen.observe(el);
+    });
+    // lazy images still loading fade in once they arrive (never hidden otherwise)
+    $$('img[loading="lazy"]', root).forEach((img) => {
+      if (img.dataset.ld || img.complete) return;
+      img.dataset.ld = '1';
+      img.classList.add('img-wait');
+      const show = () => img.classList.remove('img-wait');
+      img.addEventListener('load', show, { once: true });
+      img.addEventListener('error', show, { once: true });
+    });
+  };
+  tag(document);
+  // lists rendered later (market rows, hiscores, profile, friends) get the same treatment
+  let pending = 0;
+  new MutationObserver(() => { if (pending) return; pending = requestAnimationFrame(() => { pending = 0; tag(document); }); })
+    .observe(document.body, { childList: true, subtree: true });
+
+  // ── count-ups: numbers in facts/stats roll up the first time they are seen ──
+  const roll = (b) => {
+    const m = /^([^\d]*)(\d[\d,]*)(\.\d+)?(.*)$/.exec(b.textContent.trim());
+    if (!m) return;
+    const [, pre, int, dec, post] = m;
+    const target = Number(int.replace(/,/g, ''));
+    if (!Number.isFinite(target) || target === 0) return;
+    const grouped = int.includes(',');
+    const t0 = performance.now();
+    const dur = 700 + Math.min(500, target / 4);
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      const v = Math.round(target * e);
+      b.textContent = `${pre}${grouped ? v.toLocaleString('en-US') : v}${dec || ''}${post}`;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const counted = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    counted.unobserve(e.target);
+    if (!reduced) roll(e.target);
+  }), { threshold: 0.6 });
+  const watchNums = (root) => $$('.facts b, .profile-stats b, .worlds__n', root).forEach((b) => { if (b.dataset.cu) return; b.dataset.cu = '1'; counted.observe(b); });
+  watchNums(document);
+  new MutationObserver(() => watchNums(document)).observe(document.body, { childList: true, subtree: true });
+
+  // ── banner: pointer parallax (desktop only), composed through the `translate` property ──
+  const banner = document.querySelector('.banner');
+  if (banner && !reduced && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const layers = [
+      ...$$('.banner__hero--l', banner).map((el) => ({ el, kx: 10, ky: 5 })),
+      ...$$('.banner__hero--r', banner).map((el) => ({ el, kx: 10, ky: 5 })),
+      ...$$('.banner__logo', banner).map((el) => ({ el, kx: 4, ky: 3 })),
+      ...$$('.banner__bg', banner).map((el) => ({ el, kx: -6, ky: -3 })),
+    ];
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    const frame = () => {
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      layers.forEach(({ el, kx, ky }) => { el.style.translate = `${(cx * kx).toFixed(2)}px ${(cy * ky).toFixed(2)}px`; });
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.002 ? requestAnimationFrame(frame) : 0;
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
+    banner.addEventListener('pointermove', (e) => {
+      const r = banner.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      kick();
+    });
+    banner.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
+  }
+
+  // ── what-you-do tabs: auto-advance while in view until the visitor takes over ──
+  $$('.dotabs[data-tabs]').forEach((box) => {
+    if (reduced || !box._select || !box._tabs) return;
+    const MS = 7000;
+    box.style.setProperty('--tab-ms', `${MS}ms`);
+    let timer = 0, user = false, visible = false, hover = false;
+    const next = () => {
+      const i = box._tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true');
+      box._select(box._tabs[(i + 1) % box._tabs.length], false);
+    };
+    const update = () => {
+      clearTimeout(timer);
+      if (user) { box.classList.remove('is-auto', 'is-paused'); return; }
+      box.classList.add('is-auto');
+      const run = visible && !hover && !document.hidden;
+      box.classList.toggle('is-paused', !run);
+      if (run) timer = setTimeout(() => { next(); update(); }, MS);
+    };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; update(); }, { threshold: 0.35 }).observe(box);
+    box.addEventListener('pointerenter', () => { hover = true; update(); });
+    box.addEventListener('pointerleave', () => { hover = false; update(); });
+    document.addEventListener('visibilitychange', update);
+    // any click or key on the tab list = the visitor is driving now
+    const list = box.querySelector('[role=tablist]');
+    ['click', 'keydown', 'touchstart'].forEach((ev) => list && list.addEventListener(ev, () => { if (!user) { user = true; update(); } }, { passive: true }));
+  });
+
+  // ── the Foreman types his line, then the options arrive ──
+  const chat = document.querySelector('[data-dialogue]');
+  const line = chat && chat.querySelector('.chat__line');
+  if (chat && line) {
+    const full = line.textContent;
+    $$('.chat__opts li', chat).forEach((li, i) => li.style.setProperty('--i', String(i)));
+    const said = () => { line.textContent = full; line.classList.remove('typing'); chat.classList.remove('is-typing'); chat.classList.add('is-said'); };
+    if (reduced) said();
+    else {
+      let i = 0, timer = 0;
+      const type = () => {
+        i += 1;
+        line.textContent = full.slice(0, i);
+        if (i >= full.length) { said(); return; }
+        const ch = full[i - 1];
+        timer = setTimeout(type, ch === '.' || ch === '?' ? 260 : ch === ',' ? 120 : 22);
+      };
+      const start = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        start.disconnect();
+        line.textContent = '';
+        line.classList.add('typing');
+        chat.classList.add('is-typing');
+        timer = setTimeout(type, 350);
+      }, { threshold: 0.45 });
+      start.observe(chat);
+      line.addEventListener('click', () => { clearTimeout(timer); if (!chat.classList.contains('is-said')) said(); });
+    }
+  }
 })();

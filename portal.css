@@ -848,3 +848,111 @@ a.panel:hover { transform: translateY(-2px); filter: brightness(1.08); color: va
   .lvlup, .lvlup.is-fresh::before, .lvlup.is-fresh::after { animation: none; }
   .lvlup.is-fresh::before, .lvlup.is-fresh::after { display: none; }
 }
+
+
+/* ── motion (v5) ──────────────────────────────────────────────────────────────
+   Every move has a job: entrance = orientation, stagger = reading order, idle = "the hold is
+   alive", feedback = pressed/hover. Transform + opacity only, ease-out, nothing frequent over
+   200 ms. Reveal gating is on html.js (set by an inline script before first paint), so without
+   JS nothing is ever hidden. The global prefers-reduced-motion block above zeroes every
+   duration; the JS side also skips parallax, auto-advance and the typewriter. */
+:root { --ease-out: cubic-bezier(.22, 1, .36, 1); }
+
+/* cross-document page change: a short crossfade where the browser supports it */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .22s; }
+
+/* reveal on scroll (blocks) + staggered children (lists) */
+html.js .rv { opacity: 0; transform: translateY(14px); }
+html.js .rv.in { opacity: 1; transform: none; transition: opacity .45s var(--ease-out), transform .6s var(--ease-out); }
+html.js .rv-kids > * { opacity: 0; transform: translateY(10px); }
+html.js .rv-kids.in > * { opacity: 1; transform: none; transition: opacity .4s var(--ease-out) calc(var(--i, 0) * 55ms), transform .55s var(--ease-out) calc(var(--i, 0) * 55ms); }
+/* parchment unrolls instead of fading (rods sit 12 px outside the box, keep them in the clip) */
+html.js .scroll.rv { opacity: 1; transform: none; clip-path: inset(-14px -12px 100% -12px); }
+html.js .scroll.rv.in { clip-path: inset(-14px -12px -14px -12px); transition: clip-path .9s var(--ease-out); }
+html.js .scroll.rv .rv-kids.in > * { transition-delay: calc(var(--i, 0) * 70ms + .2s); }
+/* season event: the corner brackets draw in from their corners */
+.brackets > .bk { transition: transform .5s var(--ease-out) .15s; }
+.brackets > .bk--tl { transform-origin: 0 0; } .brackets > .bk--tr { transform-origin: 100% 0; }
+.brackets > .bk--bl { transform-origin: 0 100%; } .brackets > .bk--br { transform-origin: 100% 100%; }
+html.js .brackets.rv:not(.in) > .bk { transform: scale(0); }
+/* lazy images: only ones JS saw still loading are faded in (class removed on load/error) */
+img { transition: opacity .35s var(--ease-out); }
+img.img-wait { opacity: 0; }
+
+/* banner: the heroes walk in from the sides and keep breathing; the key art drifts; the logo lands */
+.banner__hero { --flip: 1; }
+.banner__hero--r { --flip: -1; }
+html.js .banner__hero { animation: hero-in .8s var(--ease-out) both, hero-breathe 4.2s ease-in-out 1s infinite alternate; }
+html.js .banner__hero--r { animation-delay: .08s, 1.6s; }
+@keyframes hero-in { from { opacity: 0; transform: translate(calc(var(--flip) * 28px), 14px) scaleX(var(--flip)); } to { opacity: 1; transform: translate(0, 0) scaleX(var(--flip)); } }
+@keyframes hero-breathe { from { transform: translateY(0) scaleX(var(--flip)); } to { transform: translateY(-4px) scaleX(var(--flip)); } }
+html.js .banner__logo { animation: logo-in .7s var(--ease-out) .1s both; }
+@keyframes logo-in { from { opacity: 0; transform: scale(.94) translateY(-8px); } }
+html.js .banner__line { animation: fade-up .5s var(--ease-out) .35s both; }
+html.js .banner__cta { animation: fade-up .5s var(--ease-out) .45s both; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } }
+html.js .banner__bg { inset: -10px; width: calc(100% + 20px); height: calc(100% + 20px); animation: kb 28s ease-in-out infinite alternate; transform-origin: 50% 40%; }
+.countdown b { font: inherit; }
+/* play gate: the fight clip runs behind the box — the box sits low so the blows stay visible */
+@media (min-width: 900px) { .login { align-items: end; min-height: 600px; padding-bottom: 28px; } }
+.login__view video { filter: brightness(.7) saturate(1.1); }
+@keyframes kb { from { transform: scale(1); } to { transform: scale(1.06); } }
+/* pointer parallax: JS writes the `translate` property, which composes with the animations above */
+.banner__hero, .banner__bg, .banner__logo { translate: var(--px, 0px) var(--py, 0px); }
+
+/* nav: the underline grows from the left on hover (the current page keeps its own bar) */
+@media (hover: hover) and (pointer: fine) {
+  .nav__link::before { content: ""; position: absolute; left: 8px; right: 8px; bottom: 0; height: 3px; background: var(--gold); transform: scaleX(0); transform-origin: 0 50%; transition: transform .22s var(--ease-out); }
+  .nav__link:hover::before { transform: scaleX(1); }
+  .nav__link[aria-current="page"]::before { display: none; }
+}
+.nav { transition: box-shadow .25s var(--ease-out); }
+.nav.is-stuck { box-shadow: 0 12px 28px rgba(0, 0, 0, .7); }
+
+/* pressed feedback on the flat pressables (the bevel buttons and stones have their own) */
+.tab:active, .chip:active, .hs__skill:active, .sidebox li a:active, .footer__links a:active, .chat__opts a:active, .link-more:active { transform: translateY(1px); }
+
+/* countdown: a cell ticks when its number changes */
+.countdown span.tick { animation: tick .35s var(--ease-out); }
+@keyframes tick { from { transform: translateY(-3px); opacity: .6; } }
+/* legibility bumps from the block audit (contrast < 4.5 on the dark stone) */
+.footer__legal { color: var(--text-dim); }
+.news__ver { color: #FFE9B8; background: rgba(0, 0, 0, .82); }
+.chat__hint { color: #5A3A12; }
+.sidecta__or { color: var(--text); }
+/* portraits are the worn helmet on a slot (no skins): icon padded, bare head = empty slot */
+.portrait { display: inline-grid; place-items: center; background: #000 var(--grain); }
+.portrait img { width: 86%; height: 86%; object-fit: contain; filter: drop-shadow(0 2px 0 rgba(0, 0, 0, .8)); }
+.portrait--bare::before { content: ""; width: 40%; height: 40%; border-radius: 50%; background: #3a2e20; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .5); }
+.portrait--xl.portrait--bare::before { width: 36%; height: 36%; }
+
+/* what-you-do tabs: the panel lifts in; in auto mode a progress line runs along the active tab */
+.tabs__panel:not([hidden]) { animation: tab-in .38s var(--ease-out); }
+@keyframes tab-in { from { opacity: 0; transform: translateY(8px); } }
+.dotabs .tab[aria-selected="true"]::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--gold-bright); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none; }
+.dotabs.is-auto .tab[aria-selected="true"]::before { animation: tab-prog var(--tab-ms, 7000ms) linear forwards; }
+.dotabs.is-auto.is-paused .tab[aria-selected="true"]::before { animation-play-state: paused; }
+@keyframes tab-prog { to { transform: scaleX(1); } }
+
+/* market board: the ticker pauses while you read it */
+@media (hover: hover) { .ticker:hover .ticker__track { animation-play-state: paused; } }
+
+/* faq: the answer slides in */
+.faq details[open] > div { animation: faq-in .3s var(--ease-out); }
+@keyframes faq-in { from { opacity: 0; transform: translateY(-4px); } }
+
+/* side CTA: the same slow glint as the banner button, so the two "play" doors match */
+.sidecta .btn--block { overflow: hidden; }
+.sidecta .btn--block::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 240, .4) 50%, transparent 60%) -150% 0 / 200% 100% no-repeat; animation: glint 6s ease-in-out 3s infinite; }
+
+/* dialogue CTA: the Foreman talks (typewriter + chathead nod), then the options arrive in order */
+.chat__line { cursor: default; }
+.chat__line.typing::after { content: ""; display: inline-block; width: .5em; height: 1em; margin-left: 3px; background: #1D1208; vertical-align: -.15em; animation: caret 1s steps(2) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+.chat.is-typing .chat__head img { animation: talk .3s steps(2) infinite; }
+@keyframes talk { from { transform: translateY(0); } to { transform: translateY(1px); } }
+html.js .chat.rv .chat__prompt, html.js .chat.rv .chat__opts li, html.js .chat.rv .chat__hint { opacity: 0; transform: translateY(6px); transition: opacity .35s var(--ease-out), transform .45s var(--ease-out); }
+html.js .chat.is-said .chat__prompt { opacity: 1; transform: none; }
+html.js .chat.is-said .chat__opts li { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 110ms + .15s); }
+html.js .chat.is-said .chat__hint { opacity: 1; transform: none; transition-delay: .6s; }

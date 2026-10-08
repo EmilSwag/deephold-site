@@ -20,6 +20,7 @@
 <link rel="preload" href="../fonts/pixelify-sans-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/golos-text-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../portal.css">
+<script>document.documentElement.classList.add('js')</script>
 <script defer src="../portal.js"></script>
 </head>
 <body data-page="profile">
@@ -44,19 +45,19 @@
 </div></nav>
 <main id="main" class="page">
 <div class="wrap stack">
-  <section class="panel gate"><span class="slot slot--lg"><img src="../media/icons/armor_shield_rune.webp" alt="" width="64" height="64" loading="lazy"></span><div><h2>This is a sample profile</h2><p>Log in to the game to see your own adventurer, gear and progress.</p></div><a class="btn btn--gold" href="https://web-production-811eb.up.railway.app" data-play>Log in</a></section>
-  <section class="panel profile-hero" data-pf-hero aria-label="Adventurer"></section>
+  <section class="rv panel gate"><span class="slot slot--lg"><img src="../media/icons/armor_shield_rune.webp" alt="" width="64" height="64" loading="lazy"></span><div><h2>This is a sample profile</h2><p>Log in to the game to see your own adventurer, gear and progress.</p></div><a class="btn btn--gold" href="https://web-production-811eb.up.railway.app" data-play>Log in</a></section>
+  <section class="rv panel profile-hero" data-pf-hero aria-label="Adventurer"></section>
   <div class="two">
-    <section class="panel" aria-labelledby="pf-sk"><div class="panel__head"><img src="../media/icons/tool_pickaxe_bronze.webp" alt="" width="64" height="64" loading="lazy"><h2 id="pf-sk">Skills</h2></div><div class="panel__body"><div class="skills" data-pf-skills></div></div></section>
-    <section class="panel" aria-labelledby="pf-gr"><div class="panel__head"><img src="../media/icons/armor_helmet_rune.webp" alt="" width="64" height="64" loading="lazy"><h2 id="pf-gr">Equipment</h2></div><div class="panel__body"><div class="gear" data-pf-gear></div></div></section>
+    <section class="rv panel" aria-labelledby="pf-sk"><div class="panel__head"><img src="../media/icons/tool_pickaxe_bronze.webp" alt="" width="64" height="64" loading="lazy"><h2 id="pf-sk">Skills</h2></div><div class="panel__body"><div class="skills" data-pf-skills></div></div></section>
+    <section class="rv panel" aria-labelledby="pf-gr"><div class="panel__head"><img src="../media/icons/armor_helmet_rune.webp" alt="" width="64" height="64" loading="lazy"><h2 id="pf-gr">Equipment</h2></div><div class="panel__body"><div class="gear" data-pf-gear></div></div></section>
   </div>
   <div class="two">
-    <section class="panel" aria-labelledby="pf-ac"><div class="panel__head"><img src="../media/icons/torch_pitch.webp" alt="" width="64" height="64" loading="lazy"><h2 id="pf-ac">Recent activity</h2></div><div class="panel__body"><ul class="feed" data-pf-feed></ul></div></section>
-    <section class="panel" aria-labelledby="pf-sn"><div class="panel__head"><img src="../media/icons/gem_cut.webp" alt="" width="64" height="64" loading="lazy"><h2 id="pf-sn">Skins</h2></div><div class="panel__body"><div class="skills" data-pf-skins style="grid-template-columns:repeat(4,minmax(0,1fr))"></div></div></section>
+    <section class="rv panel" aria-labelledby="pf-ac"><div class="panel__head"><img src="../media/icons/torch_pitch.webp" alt="" width="64" height="64" loading="lazy"><h2 id="pf-ac">Recent activity</h2></div><div class="panel__body"><ul class="feed" data-pf-feed></ul></div></section>
+    <section class="rv panel" aria-labelledby="pf-pl"><div class="panel__head"><img src="../media/icons/torch_pitch.webp" alt="" width="64" height="64" loading="lazy"><h2 id="pf-pl">Play with them</h2></div><div class="panel__body stack" style="gap:10px"><p class="dim" style="margin:0">Adventurers look like what they wear. Nothing here is bought: every piece on that grid was dug, forged or traded for.</p><a class="btn btn--gold" href="https://web-production-811eb.up.railway.app" data-play><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>Start your own kit</a></div></section>
   </div>
 </div>
 </main>
-<footer class="footer"><div class="wrap footer__in">
+<footer class="rv footer"><div class="wrap footer__in">
   <a class="footer__logo" href="../"><img src="../media/v2/logo.webp" alt="Deephold home" width="180"></a>
   <nav class="footer__links" aria-label="Footer"><a href="https://web-production-811eb.up.railway.app" data-play>Play</a><a href="../news/">News</a><a href="../patch-notes/">Patch notes</a><a href="../guides/">Guides</a><a href="../market/">Market</a><a href="../hiscores/">Hiscores</a><a href="../community/">The hold</a><a href="../community/#discord">Discord</a><a href="../friends/">Friends</a><a href="../profile/">Profile</a><a href="../play/#steam" data-steam>Steam waitlist</a><a href="../press/">Press kit</a></nav>
   <p class="footer__tag">An idle MMO about digging deep, forging gear and trading with real people. Runs in your browser. Keeps going while you're away.</p>
